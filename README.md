@@ -1,7 +1,14 @@
-Memory Inspector
-================
+Configure your C++ Apps
+=======================
 
 [![ci](https://github.com/c-carrasco/cppconfig/actions/workflows/main.yml/badge.svg)](https://github.com/c-carrasco/cppconfig/actions/workflows/main.yml)
+
+# TODO
+
+- [ ] JSON Tokenizer
+- [ ] JSON Parser
+- [ ] Logic
+- [ ] Documentation
 
 # Introduction
 
@@ -18,9 +25,74 @@ Configurations are stored in configuration files within your application, and ca
 - Powerful: For multi-node enterprise deployment.
 - Flexible - Supporting multiple config file formats.
 
+# Quick Start
+
+Edit the default config file.
+
+```SHELL
+$> mkdir config
+$> vim config/default.json
+```
+
+```JSON
+{
+  "database": {
+    "host": "postgresql://localhost",
+    "port": 1234,
+    "name": "Users"
+  }
+}
+```
+
+Edit config overrides for production deployment:
+
+```SHELL
+$> vim config/production.json
+```
+
+```JSON
+{
+  "database": {
+    "host": "postgresql://db-prod.acme.com",
+  }
+}
+```
+
+Use configs in your code:
+
+```CPP
+#include <iostream>
+#include <cppconfig/config.h>
+
+int main (int argc, char *argv[]) {
+  // argv[1] = path to the folder containing the json configuration files.
+  cppconfig::Config config { argv[1] };
+
+  const auto host { config.get<std::string> ("database.host") };
+  const auto port { config.get<uint16> ("database.port" ) };
+  const auto db { config.get<std::string> ("database.name" ) };
+
+  std::cout << "host: " << host << std::cendl;
+  std::cout << "port: " << port << std::cendl;
+  std::cout << "db: " << db << std::cendl;
+
+  return 0;
+}
+```
+
+Build & launch your app:
+
+```SHELL
+$> g++ ... -o my_app
+$> CPPCONFIG_ENV=production ./my_app config
+host: postgresql://db-prod.acme.com
+port: 1234
+db: Users
+```
+
 # Prerequisites to build this project
 
-Before diving into `meminspect`, make sure you have the following tools and dependencies set up:
+Before diving into `cpp-config`, make sure you have the following tools and dependencies set up:
 
 - Conan 1.x
 - CMake 3.20 or higer
