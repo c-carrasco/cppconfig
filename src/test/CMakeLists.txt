@@ -1,6 +1,6 @@
 file (GLOB CXX_FILES FILES *.cxx)
 
-set (EXE_NAME "test_cxxlogger")
+set (EXE_NAME "test_cppconfig")
 
 add_executable (${EXE_NAME} ${CXX_FILES})
 
