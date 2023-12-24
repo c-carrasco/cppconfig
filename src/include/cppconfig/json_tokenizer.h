@@ -5,6 +5,7 @@
 // ----------------------------------------------------------------------------
 #ifndef __CPP_CONFIG_JSON_TOKENIZER_H__
 #define __CPP_CONFIG_JSON_TOKENIZER_H__
+#include <cctype>
 #include <cstdlib>
 #include <charconv>
 #include <memory>
@@ -77,39 +78,51 @@ class Buffer {
     size_t _idx { 0 };
 };
 
+/// Enumeration representing different types of JSON tokens.
 enum class JsonTokenId {
-  kObjectBegin,
-  kObjectEnd,
-  kArrayBegin,
-  kArrayEnd,
-  kColon,
-  kComma,
-  kValueString,
-  kValueFloatPoint,
-  kValueInteger,
-  kValueBoolean,
-  kValueNull,
-  kError
+  kObjectBegin,       ///< Indicates the beginning of a JSON object.
+  kObjectEnd,         ///< Indicates the end of a JSON object.
+  kArrayBegin,        ///< Indicates the beginning of a JSON array.
+  kArrayEnd,          ///< Indicates the end of a JSON array.
+  kColon,             ///< Represents the colon character (":") in JSON.
+  kComma,             ///< Represents the comma character (",") in JSON.
+  kValueString,       ///< Represents a JSON string value.
+  kValueFloatPoint,   ///< Represents a JSON floating-point value.
+  kValueInteger,      ///< Represents a JSON integer value.
+  kValueBoolean,      ///< Represents a JSON boolean value.
+  kValueNull,         ///< Represents a JSON null value.
+  kError              ///< Represents a JSON error.
 };
 
+/// @brief Represents a JSON token with various data types.
 class JsonToken {
   public:
+    /// Constructs a JsonToken with the specified id.
+    /// @param id The JsonTokenId for the token.
     inline JsonToken (JsonTokenId id) noexcept: _id { id } {
       // empty
     }
 
+    /// Constructs a JsonToken with a boolean value.
+    /// @param v The boolean value for the token.
     inline JsonToken (bool v) noexcept: _id { JsonTokenId::kValueBoolean }, _value { v } {
       // empty
     }
 
+    /// Constructs a JsonToken with a floating-point value.
+    /// @param v The double value for the token.
     inline JsonToken (double v) noexcept: _id { JsonTokenId::kValueFloatPoint }, _value { v } {
       // empty
     }
 
+    /// Constructs a JsonToken with an integer value.
+    /// @param v The int64_t value for the token.
     inline JsonToken (int64_t v) noexcept: _id { JsonTokenId::kValueInteger }, _value { v } {
       // empty
     }
 
+    /// Constructs a JsonToken with a string value.
+    /// @param v The string value for the token.
     inline  JsonToken (const std::string_view &v):
       _id { JsonTokenId::kValueString },
       _value { std::string { v.begin(), v.end() } }
@@ -117,8 +130,14 @@ class JsonToken {
       // empty
     }
 
+    /// Returns the JsonTokenId of the token.
+    /// @return The JsonTokenId of the token.
     inline JsonTokenId id() const { return _id; }
 
+    /// Returns the value of the token.
+    /// @tparam T The type of the value to retrieve.
+    /// @return The value of the token as the specified type.
+    /// @note This function performs a static assertion to ensure the requested type is valid.
     template<typename T>
     T value() const {
       static_assert(
@@ -131,6 +150,10 @@ class JsonToken {
       return std::get<T> (_value);
     }
 
+    /// Overloaded stream insertion operator for outputting JsonToken to a stream.
+    /// @param os The output stream.
+    /// @param obj The JsonToken object to output.
+    /// @return The output stream.
     friend std::ostream & operator<< (std::ostream &os, const JsonToken &obj) {
       switch (obj._id) {
         case JsonTokenId::kObjectBegin: os << "ObjectBegin"; break;
@@ -152,21 +175,27 @@ class JsonToken {
     }
 
   private:
-    JsonTokenId _id;
-    std::variant<std::string, bool, int64_t, double> _value;
+    JsonTokenId _id; ///< The JsonTokenId of the token.
+    std::variant<std::string, bool, int64_t, double> _value; ///< The value of the token, stored as a variant.
 };
 
+/// JsonTokenizer class for tokenizing JSON input.
 class JsonTokenizer {
   public:
+    /// Enumeration representing possible errors during JSON tokenization.
     enum class Error {
-      kNoError,
-      kPrematureEnd
+      kNoError,         ///< No error occurred during tokenization.
+      kPrematureEnd     ///< Premature end of data during tokenization.
     };
 
+    /// Constructor for JsonTokenizer.
+    /// @param buffer The Buffer containing the JSON data to tokenize.
     JsonTokenizer (Buffer &&buffer): _buffer { std::move (buffer) } {
       // empty
     }
 
+    /// Retrieves the next JSON token from the input data.
+    /// @return An optional JsonToken, or std::nullopt if no more tokens are available or an error occurs.
     std::optional<JsonToken> next() {
       while (!_buffer.endOfData()) {
         const auto c { _buffer.next() };
@@ -259,8 +288,6 @@ class JsonTokenizer {
               }
             }
 
-            // https://www.tutorialspoint.com/json/json_data_types.htm
-
             return _setError (Error::kPrematureEnd);
         }
       }
@@ -269,10 +296,13 @@ class JsonTokenizer {
     }
 
   private:
-    Buffer _buffer;
-    Error _error { Error::kNoError };
+    Buffer _buffer;  ///< The Buffer containing the JSON data to tokenize.
+    Error _error { Error::kNoError };  ///< The current error state during tokenization.
 
-    JsonToken _setError (Error err) {
+    /// Sets the error state and returns a JsonToken representing the error.
+    /// @param err The error code to set.
+    /// @return A JsonToken representing the error.
+    inline JsonToken _setError (Error err) {
       _error = err;
       return JsonToken { JsonTokenId::kError };
     }
