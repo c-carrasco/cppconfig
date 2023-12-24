@@ -17,7 +17,8 @@ constexpr const char * kJsonStr01 { R"({
   "float1": -0.12,
   "int1": -123,
   "array": [ 1, 2 ],
-  "dict": { "sub1": 0456 }
+  "dict": { "sub1": 0456 },
+  "key4": "\"unicode\" \u00b0C\nhello\tworld"
 })"
 };
 
@@ -62,6 +63,10 @@ constexpr const std::array kJsonId01 {
   cppconfig::json::JsonTokenId::kColon,
   cppconfig::json::JsonTokenId::kValueInteger,
   cppconfig::json::JsonTokenId::kObjectEnd,
+  cppconfig::json::JsonTokenId::kComma,
+  cppconfig::json::JsonTokenId::kValueString,
+  cppconfig::json::JsonTokenId::kColon,
+  cppconfig::json::JsonTokenId::kValueString,
   cppconfig::json::JsonTokenId::kObjectEnd
 };
 
@@ -106,6 +111,11 @@ const std::array kJsonValue01 {
   std::any { },
   std::any { 456LL },
   std::any { },
+  std::any { },
+  std::any { "key4" },
+  std::any { },
+  std::any { R"("unicode" °C
+hello	world)" },
   std::any { }
 };
 
@@ -130,7 +140,7 @@ TEST (JsonTokenizer, test_next) {
 
   size_t idx { 0 };
   for (auto token = tokenizer.next(); token.has_value(); token = tokenizer.next(), ++idx) {
-    EXPECT_EQ (token->id(), kJsonId01[idx]);
+    ASSERT_EQ (token->id(), kJsonId01[idx]);
 
     if (kJsonValue01[idx].has_value()) {
       if (typeid(const char *) == kJsonValue01[idx].type())

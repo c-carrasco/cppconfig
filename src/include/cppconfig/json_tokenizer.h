@@ -5,9 +5,6 @@
 // ----------------------------------------------------------------------------
 #ifndef __CPP_CONFIG_JSON_TOKENIZER_H__
 #define __CPP_CONFIG_JSON_TOKENIZER_H__
-#include <cctype>
-#include <cstdlib>
-#include <charconv>
 #include <memory>
 #include <optional>
 #include <ostream>
@@ -39,17 +36,11 @@ class Buffer {
       return false;
     }
 
-    inline bool match (const std::function<bool (char)> &f) const {
-      return (_idx + 1 < _size) && f (_data.get()[_idx + 1]);
-    }
+    inline std::string take (size_t len) const {
+      if (_idx + len < _size)
+        return std::string { _data.get() + _idx, len };
 
-    inline std::pair<int32_t, std::string_view> find (char ch) const {
-      if (const auto it = std::find (_data.get() + _idx, _data.get() + _size, ch); *it == ch) {
-        const auto len { it - (_data.get() + _idx) };
-        return std::make_pair (len, std::string_view { _data.get() + _idx, static_cast<size_t> (len) });
-      }
-
-      return std::make_pair (-1, std::string_view {});
+      return {};
     }
 
     inline  size_t count (const std::function<bool (char)> &cb) const {
@@ -185,7 +176,8 @@ class JsonTokenizer {
     /// Enumeration representing possible errors during JSON tokenization.
     enum class Error {
       kNoError,         ///< No error occurred during tokenization.
-      kPrematureEnd     ///< Premature end of data during tokenization.
+      kPrematureEnd,    ///< Premature end of data during tokenization.
+      kInvalidEscape    ///< Invalid escape sequence in a string.
     };
 
     /// Constructor for JsonTokenizer.
@@ -196,108 +188,19 @@ class JsonTokenizer {
 
     /// Retrieves the next JSON token from the input data.
     /// @return An optional JsonToken, or std::nullopt if no more tokens are available or an error occurs.
-    std::optional<JsonToken> next() {
-      while (!_buffer.endOfData()) {
-        const auto c { _buffer.next() };
-
-        switch (c) {
-          case '{': return JsonToken { JsonTokenId::kObjectBegin };
-          case '}': return JsonToken { JsonTokenId::kObjectEnd };
-          case '[': return JsonToken { JsonTokenId::kArrayBegin };
-          case ']': return JsonToken { JsonTokenId::kArrayEnd };
-          case ':': return JsonToken { JsonTokenId::kColon };
-          case ',': return JsonToken { JsonTokenId::kComma };
-          case 'n':
-            if (_buffer.match ("ull", 3)) {
-              _buffer.forward (3);
-              return JsonToken {  JsonTokenId::kValueNull };
-            }
-
-            return _setError (Error::kPrematureEnd);
-          case 't':
-            if (_buffer.match ("rue", 3)) {
-              _buffer.forward (3);
-              return JsonToken { true };
-            }
-
-            return _setError (Error::kPrematureEnd);
-          case 'f':
-            if (_buffer.match ("alse", 4)) {
-              _buffer.forward (4);
-              return JsonToken { false };
-            }
-
-            return _setError (Error::kPrematureEnd);
-          case '"':
-            // TODO: handle '\' + "|\|/|\|b|f|n|r|t|u(4 hex digit)
-            if (const auto [ pos, str ] = _buffer.find ('"'); pos > -1) {
-              _buffer.forward (pos + 1);
-              return JsonToken { str };
-            }
-
-            return _setError (Error::kPrematureEnd);
-          case ' ':
-          case '\t':
-          case '\n':
-          case '\r':
-          case '\0':
-            break;
-          default:
-            if ((c == '-') || std::isdigit (c)) {
-              bool isFp { false };
-
-              const size_t len = _buffer.count ([ &isFp ] (const char c) {
-                switch (c) {
-                  case '.':
-                    isFp = true;
-                    break;
-                  case ' ':
-                  case ',':
-                  case ']':
-                  case '}':
-                  case '\n':
-                    return false;
-                }
-                return true;
-              });
-
-              if (isFp) {
-#if __has_feature(__cpp_lib_constexpr_charconv)
-                double value {};
-                const auto r { std::from_chars (_buffer.current() - 1, _buffer.current() + len, value) };
-                if (r.ptr == _buffer.current() + len) {
-                  _buffer.forward (len);
-                  return JsonToken { value };
-                }
-#else
-                char * end = const_cast<char *> (_buffer.current() + len);
-                const auto value { std::strtod (_buffer.current() - 1, &end) };
-                if ((value != 0) || (end != _buffer.current())) {
-                  _buffer.forward (len);
-                  return JsonToken { value };
-                }
-#endif
-              }
-              else {
-                int64_t value {};
-                const auto r { std::from_chars (_buffer.current() - 1, _buffer.end(), value) };
-                if (r.ptr == _buffer.current() + len) {
-                  _buffer.forward (len);
-                  return JsonToken { value };
-                }
-              }
-            }
-
-            return _setError (Error::kPrematureEnd);
-        }
-      }
-
-      return std::nullopt;
-    }
+    std::optional<JsonToken> next();
 
   private:
     Buffer _buffer;  ///< The Buffer containing the JSON data to tokenize.
     Error _error { Error::kNoError };  ///< The current error state during tokenization.
+
+    /// Handles a number.
+    /// @return A JsonToken representing the number.
+    JsonToken _handleNumber ();
+
+    /// Handles a string.
+    /// @return A JsonToken representing the string.
+    JsonToken _handleString ();
 
     /// Sets the error state and returns a JsonToken representing the error.
     /// @param err The error code to set.
