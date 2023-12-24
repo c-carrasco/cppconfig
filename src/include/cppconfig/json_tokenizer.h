@@ -94,23 +94,23 @@ enum class JsonTokenId {
 
 class JsonToken {
   public:
-    JsonToken (JsonTokenId id): _id { id } {
+    inline JsonToken (JsonTokenId id) noexcept: _id { id } {
       // empty
     }
 
-    JsonToken (bool v): _id { JsonTokenId::kValueBoolean }, _value { v } {
+    inline JsonToken (bool v) noexcept: _id { JsonTokenId::kValueBoolean }, _value { v } {
       // empty
     }
 
-    JsonToken (double v): _id { JsonTokenId::kValueFloatPoint }, _value { v } {
+    inline JsonToken (double v) noexcept: _id { JsonTokenId::kValueFloatPoint }, _value { v } {
       // empty
     }
 
-    JsonToken (int64_t v): _id { JsonTokenId::kValueInteger }, _value { v } {
+    inline JsonToken (int64_t v) noexcept: _id { JsonTokenId::kValueInteger }, _value { v } {
       // empty
     }
 
-    JsonToken (const std::string_view &v):
+    inline  JsonToken (const std::string_view &v):
       _id { JsonTokenId::kValueString },
       _value { std::string { v.begin(), v.end() } }
     {
@@ -121,6 +121,13 @@ class JsonToken {
 
     template<typename T>
     T value() const {
+      static_assert(
+        std::is_same_v<T, std::variant_alternative_t<0, decltype(_value)>> ||
+        std::is_same_v<T, std::variant_alternative_t<1, decltype(_value)>> ||
+        std::is_same_v<T, std::variant_alternative_t<2, decltype(_value)>> ||
+        std::is_same_v<T, std::variant_alternative_t<3, decltype(_value)>>
+      );
+
       return std::get<T> (_value);
     }
 
