@@ -123,7 +123,7 @@ hello	world)" },
 // test_emtpy
 // ----------------------------------------------------------------------------
 TEST (JsonTokenizer, test_emtpy) {
-  cppconfig::json::JsonTokenizer tokenizer { cppconfig::json::Buffer { std::unique_ptr<char []> {}, 0 } };
+  cppconfig::json::JsonTokenizer tokenizer { cppconfig::json::Buffer { nullptr, 0 } };
   ASSERT_FALSE (tokenizer.next().has_value());
 }
 
@@ -131,11 +131,7 @@ TEST (JsonTokenizer, test_emtpy) {
 // test_next
 // ----------------------------------------------------------------------------
 TEST (JsonTokenizer, test_next) {
-  const auto len { std::strlen (kJsonStr01) + 1 };
-  auto data = std::make_unique<char []> (len);
-
-  std::copy_n (kJsonStr01, len, data.get());
-  cppconfig::json::Buffer buffer { std::move (data), len };
+  cppconfig::json::Buffer buffer { kJsonStr01, std::strlen (kJsonStr01) + 1 };
   cppconfig::json::JsonTokenizer tokenizer { std::move (buffer) };
 
   size_t idx { 0 };

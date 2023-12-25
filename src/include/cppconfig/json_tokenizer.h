@@ -5,69 +5,14 @@
 // ----------------------------------------------------------------------------
 #ifndef __CPP_CONFIG_JSON_TOKENIZER_H__
 #define __CPP_CONFIG_JSON_TOKENIZER_H__
-#include <memory>
 #include <optional>
 #include <ostream>
 #include <string>
 #include <string_view>
 
+#include <cppconfig/json_buffer.h>
 
 namespace cppconfig::json {
-
-class Buffer {
-  public:
-    Buffer (std::unique_ptr<char []> &&d, size_t len): _data { std::move (d) }, _size { len } {
-      // empty
-    }
-
-    inline char next() {
-      return _data.get()[_idx++];
-    }
-
-
-    inline bool endOfData() const {
-      return _idx >= _size;
-    }
-
-    inline bool match (const char *mem, size_t count) const {
-      if (_idx + count < _size)
-        return std::memcmp (_data.get() + _idx, mem, count) == 0;
-
-      return false;
-    }
-
-    inline std::string take (size_t len) const {
-      if (_idx + len < _size)
-        return std::string { _data.get() + _idx, len };
-
-      return {};
-    }
-
-    inline  size_t count (const std::function<bool (char)> &cb) const {
-      size_t counter { 0 };
-      for (size_t i = _idx; i < _size; ++i) {
-        if (!cb (_data.get()[i]))
-          break;
-
-        ++counter;
-      }
-
-      return counter;
-    }
-
-    inline void forward (size_t len) {
-      _idx += len;
-    }
-
-    inline const char * current() const { return _data.get() + _idx; }
-
-    inline const char * end() const { return _data.get() + _size; }
-
-  private:
-    std::unique_ptr<char []> _data;
-    size_t _size { 0 };
-    size_t _idx { 0 };
-};
 
 /// Enumeration representing different types of JSON tokens.
 enum class JsonTokenId {
@@ -82,7 +27,8 @@ enum class JsonTokenId {
   kValueInteger,      ///< Represents a JSON integer value.
   kValueBoolean,      ///< Represents a JSON boolean value.
   kValueNull,         ///< Represents a JSON null value.
-  kError              ///< Represents a JSON error.
+  kError,             ///< Represents a JSON error.
+  kEmpty              ///< Represents a unitialized token id.
 };
 
 /// @brief Represents a JSON token with various data types.
@@ -130,7 +76,7 @@ class JsonToken {
     /// @return The value of the token as the specified type.
     /// @note This function performs a static assertion to ensure the requested type is valid.
     template<typename T>
-    T value() const {
+    const T & value() const {
       static_assert(
         std::is_same_v<T, std::variant_alternative_t<0, decltype(_value)>> ||
         std::is_same_v<T, std::variant_alternative_t<1, decltype(_value)>> ||
@@ -175,20 +121,28 @@ class JsonTokenizer {
   public:
     /// Enumeration representing possible errors during JSON tokenization.
     enum class Error {
-      kNoError,         ///< No error occurred during tokenization.
-      kPrematureEnd,    ///< Premature end of data during tokenization.
-      kInvalidEscape    ///< Invalid escape sequence in a string.
+      kNoError,            ///< No error occurred during tokenization.
+      kPrematureEnd  = 1,  ///< Premature end of data during tokenization.
+      kInvalidEscape = 2   ///< Invalid escape sequence in a string.
     };
 
-    /// Constructor for JsonTokenizer.
+    /// @brief Constructor for JsonTokenizer.
     /// @param buffer The Buffer containing the JSON data to tokenize.
     JsonTokenizer (Buffer &&buffer): _buffer { std::move (buffer) } {
       // empty
     }
 
-    /// Retrieves the next JSON token from the input data.
+    /// @brief Retrieves the next JSON token from the input data.
     /// @return An optional JsonToken, or std::nullopt if no more tokens are available or an error occurs.
     std::optional<JsonToken> next();
+
+    /// @brief Retrieves the current line
+    size_t line() const { return _buffer.line(); }
+
+    /// @brief Retrieves the current column
+    size_t column() const { return _buffer.column(); }
+
+    Error error() const { return _error; }
 
   private:
     Buffer _buffer;  ///< The Buffer containing the JSON data to tokenize.
