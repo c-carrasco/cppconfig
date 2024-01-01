@@ -1,7 +1,7 @@
 // ----------------------------------------------------------------------------
 // MIT License
 //
-// Copyright (c) 2023 Carlos Carrasco
+// Copyright (c) 2023-2024 Carlos Carrasco
 // ----------------------------------------------------------------------------
 #include <gtest/gtest.h>
 
@@ -43,7 +43,7 @@ TEST (JsonToken, test_constructor) {
   cppconfig::json::JsonToken jt14 { 1.234f };
   ASSERT_EQ (jt14.id(), cppconfig::json::JsonTokenId::kValueFloatPoint);
   ASSERT_NEAR (jt14.value<double>(), 1.234, 0.001);
-  cppconfig::json::JsonToken jt15 { -123LL };
+  cppconfig::json::JsonToken jt15 { int64_t(-123L) };
   ASSERT_EQ (jt15.id(), cppconfig::json::JsonTokenId::kValueInteger);
   ASSERT_EQ (jt15.value<int64_t>(), -123);
   cppconfig::json::JsonToken jt16 { true };

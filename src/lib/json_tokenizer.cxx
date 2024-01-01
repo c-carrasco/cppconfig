@@ -1,12 +1,13 @@
 // ----------------------------------------------------------------------------
 // MIT License
 //
-// Copyright (c) 2023 Carlos Carrasco
+// Copyright (c) 2023-2024 Carlos Carrasco
 // ----------------------------------------------------------------------------
 #include <cctype>
 #include <charconv>
 #include <codecvt>
 #include <cstdlib>
+#include <locale>
 
 #include <cppconfig/json_tokenizer.h>
 
@@ -91,6 +92,7 @@ JsonToken JsonTokenizer::_handleString () {
       continue;
     }
 
+
     switch (c) {
       case 'b':
         str.push_back (0x08);
@@ -161,7 +163,7 @@ JsonToken JsonTokenizer::_handleNumber () {
   });
 
   if (isFp) {
-#if __has_feature(__cpp_lib_constexpr_charconv)
+#if !defined(__APPLE__)
     double value {};
     const auto r { std::from_chars (_buffer.current() - 1, _buffer.current() + len, value) };
     if (r.ptr == _buffer.current() + len) {

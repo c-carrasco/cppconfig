@@ -1,7 +1,7 @@
 // ----------------------------------------------------------------------------
 // MIT License
 //
-// Copyright (c) 2023 Carlos Carrasco
+// Copyright (c) 2023-2024 Carlos Carrasco
 // ----------------------------------------------------------------------------
 #include <cstring>
 
@@ -12,7 +12,7 @@
 
 
 // ----------------------------------------------------------------------------
-// test_parser
+// test_well_formed
 // ----------------------------------------------------------------------------
 TEST (JsonParser, test_well_formed) {
   constexpr const char *json { R"(
@@ -39,7 +39,7 @@ TEST (JsonParser, test_well_formed) {
 
   cppconfig::json::JsonParser parser;
 
-  const auto root { parser.parse (json, std::strlen (json) + 1) };
+  const auto root { parser.parse (json, std::strlen (json)) };
   ASSERT_TRUE (root.has_value());
   const auto &doc { root.value() };
 
@@ -111,4 +111,24 @@ TEST (JsonParser, test_well_formed) {
   ASSERT_TRUE (arr[6]["first"].isInt());
   ASSERT_EQ (arr[6]["first"].asInt(), -99);
   ASSERT_TRUE (arr[7].asBool());
+}
+
+// ----------------------------------------------------------------------------
+// test_error
+// ----------------------------------------------------------------------------
+TEST (JsonParser, test_error) {
+  constexpr const char *json0 { R"(
+    {
+      "v1": 2
+      "v2": "hello
+    }
+  )"};
+
+  cppconfig::json::JsonParser parser;
+
+  const auto root0 { parser.parse (json0, std::strlen (json0)) };
+  ASSERT_FALSE (root0.has_value());
+  ASSERT_EQ (parser.error().code, cppconfig::json::JsonParser::ErrorCode::kExpectCommaOrEndObj);
+  ASSERT_EQ (parser.error().line, 3);
+  ASSERT_EQ (parser.error().column, 10);
 }

@@ -1,7 +1,7 @@
 // ----------------------------------------------------------------------------
 // MIT License
 //
-// Copyright (c) 2023 Carlos Carrasco
+// Copyright (c) 2023-2024 Carlos Carrasco
 // ----------------------------------------------------------------------------
 #include <cstring>
 
@@ -131,7 +131,7 @@ TEST (JsonTokenizer, test_emtpy) {
 // test_next
 // ----------------------------------------------------------------------------
 TEST (JsonTokenizer, test_next) {
-  cppconfig::json::Buffer buffer { kJsonStr01, std::strlen (kJsonStr01) + 1 };
+  cppconfig::json::Buffer buffer { kJsonStr01, std::strlen (kJsonStr01) };
   cppconfig::json::JsonTokenizer tokenizer { std::move (buffer) };
 
   size_t idx { 0 };
@@ -152,4 +152,46 @@ TEST (JsonTokenizer, test_next) {
     }
   }
   ASSERT_EQ (kJsonId01.size(), idx);
+}
+
+// ----------------------------------------------------------------------------
+// test_premature_error
+// ----------------------------------------------------------------------------
+TEST (JsonTokenizer, test_premature_error) {
+  constexpr const char *str0 { "{ \"test" };
+  cppconfig::json::JsonTokenizer tokenizer0 { cppconfig::json::Buffer { str0, std::strlen (str0) } };
+  const auto t0 { tokenizer0.next() };
+  ASSERT_TRUE (t0.has_value());
+  ASSERT_EQ (t0->id(), cppconfig::json::JsonTokenId::kObjectBegin);
+  const auto t1 { tokenizer0.next() };
+  ASSERT_TRUE (t1.has_value());
+  ASSERT_EQ (t1->id(), cppconfig::json::JsonTokenId::kError);
+  ASSERT_EQ (tokenizer0.error(), cppconfig::json::JsonTokenizer::Error::kPrematureEnd);
+  ASSERT_EQ (tokenizer0.line(), 0);
+  ASSERT_EQ (tokenizer0.column(), 7);
+
+  constexpr const char *str1 { "{ \"test\":\n1a }" };
+  cppconfig::json::JsonTokenizer tokenizer1 { cppconfig::json::Buffer { str1, std::strlen (str1) } };
+  ASSERT_EQ (tokenizer1.next()->id(), cppconfig::json::JsonTokenId::kObjectBegin);
+  ASSERT_EQ (tokenizer1.next()->id(), cppconfig::json::JsonTokenId::kValueString);
+  ASSERT_EQ (tokenizer1.next()->id(), cppconfig::json::JsonTokenId::kColon);
+  ASSERT_EQ (tokenizer1.next()->id(), cppconfig::json::JsonTokenId::kError);
+  ASSERT_EQ (tokenizer1.error(), cppconfig::json::JsonTokenizer::Error::kPrematureEnd);
+  ASSERT_EQ (tokenizer1.line(), 1);
+  ASSERT_EQ (tokenizer1.column(), 1);
+}
+
+// ----------------------------------------------------------------------------
+// test_escape_error
+// ----------------------------------------------------------------------------
+TEST (JsonTokenizer, test_escape_error) {
+  constexpr const char *str1 { "{\n\"test\":\n \"aa\\kbbb\" }" };
+  cppconfig::json::JsonTokenizer tokenizer0 { cppconfig::json::Buffer { str1, std::strlen (str1) } };
+  ASSERT_EQ (tokenizer0.next()->id(), cppconfig::json::JsonTokenId::kObjectBegin);
+  ASSERT_EQ (tokenizer0.next()->id(), cppconfig::json::JsonTokenId::kValueString);
+  ASSERT_EQ (tokenizer0.next()->id(), cppconfig::json::JsonTokenId::kColon);
+  ASSERT_EQ (tokenizer0.next()->id(), cppconfig::json::JsonTokenId::kError);
+  ASSERT_EQ (tokenizer0.error(), cppconfig::json::JsonTokenizer::Error::kInvalidEscape);
+  ASSERT_EQ (tokenizer0.line(), 2);
+  ASSERT_EQ (tokenizer0.column(), 6);
 }

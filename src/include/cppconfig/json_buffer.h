@@ -1,12 +1,14 @@
 // ----------------------------------------------------------------------------
 // MIT License
 //
-// Copyright (c) 2023 Carlos Carrasco
+// Copyright (c) 2023-2024 Carlos Carrasco
 // ----------------------------------------------------------------------------
 #ifndef __CPP_CONFIG_JSON_BUFFER_H__
 #define __CPP_CONFIG_JSON_BUFFER_H__
+#include <cstring>
 #include <functional>
 #include <memory>
+#include <string>
 
 
 namespace cppconfig::json {
@@ -25,7 +27,7 @@ class Buffer {
       const auto c { _ptr[_idx++] };
       if (c == '\n') {
         ++_line;
-        _col = 1;
+        _col = 0;
       }
       else {
         ++_col;
@@ -50,7 +52,7 @@ class Buffer {
       if (_idx + len < _size)
         return std::string { _ptr + _idx, len };
 
-      return {};
+      return std::string {};
     }
 
     inline  size_t count (const std::function<bool (char)> &cb) const {

@@ -5,8 +5,8 @@ Configure your C++ Apps
 
 # TODO
 
-- [ ] JSON Tokenizer
-- [ ] JSON Parser
+- [X] JSON Tokenizer
+- [X] JSON Parser
 - [ ] Logic
 - [ ] Documentation
 
@@ -162,6 +162,10 @@ TBC
 
 # Contributing
 We welcome contributions from the community.
+
+# References
+
+https://www.json.org/json-en.html
 
 # License
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.

@@ -1,7 +1,7 @@
 // ----------------------------------------------------------------------------
 // MIT License
 //
-// Copyright (c) 2023 Carlos Carrasco
+// Copyright (c) 2023-2024 Carlos Carrasco
 // ----------------------------------------------------------------------------
 #ifndef __CPP_CONFIG_JSON_PARSER_H__
 #define __CPP_CONFIG_JSON_PARSER_H__

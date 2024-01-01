@@ -1,10 +1,9 @@
 // ----------------------------------------------------------------------------
 // MIT License
 //
-// Copyright (c) 2023 Carlos Carrasco
+// Copyright (c) 2023-2024 Carlos Carrasco
 // ----------------------------------------------------------------------------
 #include <cppconfig/json_parser.h>
-// #include <cppconfig/mm_file.h>
 #include <iostream>
 
 

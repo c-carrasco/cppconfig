@@ -1,7 +1,7 @@
 // ----------------------------------------------------------------------------
 // MIT License
 //
-// Copyright (c) 2023 Carlos Carrasco
+// Copyright (c) 2023-2024 Carlos Carrasco
 // ----------------------------------------------------------------------------
 #ifndef __CPP_CONFIG_JSON_TOKENIZER_H__
 #define __CPP_CONFIG_JSON_TOKENIZER_H__
@@ -9,6 +9,7 @@
 #include <ostream>
 #include <string>
 #include <string_view>
+#include <variant>
 
 #include <cppconfig/json_buffer.h>
 
@@ -136,12 +137,16 @@ class JsonTokenizer {
     /// @return An optional JsonToken, or std::nullopt if no more tokens are available or an error occurs.
     std::optional<JsonToken> next();
 
-    /// @brief Retrieves the current line
+    /// @brief Retrieves the current line.
+    /// @return The current line number.
     size_t line() const { return _buffer.line(); }
 
-    /// @brief Retrieves the current column
+    /// @brief Retrieves the current column.
+    /// @return The current column number.
     size_t column() const { return _buffer.column(); }
 
+    /// @brief Retrieves the last error.
+    /// @return  The last error.
     Error error() const { return _error; }
 
   private:
