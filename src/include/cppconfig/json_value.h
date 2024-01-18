@@ -36,6 +36,49 @@ class JsonValue {
       // empty
     }
 
+
+    /// @brief Copy constructor for JsonValue.
+    /// @param obj obj The JsonValue object to be copied.
+    JsonValue (const JsonValue &obj):
+      _token { obj._token },
+      _map { obj._map },
+      _array { obj._array }
+    {
+      // empty
+    }
+
+    /// @brief Copy assignment operator for JsonValue.
+    /// @param obj The JsonValue object to be assigned.
+    /// @return A reference to the current JsonValue instance after the assignment.
+    JsonValue & operator= (const JsonValue &obj) {
+      _token = obj._token;
+      _map = obj._map;
+      _array = obj._array;
+
+      return *this;
+    }
+
+    /// @brief Move constructor for JsonValue.
+    /// @param obj The JsonValue object to be moved.
+    JsonValue (JsonValue &&obj) noexcept:
+      _token { std::move (obj._token) },
+      _map { std::move (obj._map) },
+      _array { std::move (obj._array) }
+    {
+      // empty
+    }
+
+    /// @brief Move assignment operator for JsonValue.
+    /// @param obj The JsonValue object to be moved.
+    /// @return A reference to the current JsonValue instance after the move assignment.
+    JsonValue & operator= (JsonValue &&obj) noexcept {
+      _token = std::move (obj._token);
+      _map = std::move (obj._map);
+      _array = std::move (obj._array);
+
+      return *this;
+    }
+
     /// @brief Checks if the JSON value is a boolean.
     inline bool isBool() const { return _token.id() == JsonTokenId::kValueBoolean; }
 

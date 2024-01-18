@@ -163,7 +163,7 @@ JsonToken JsonTokenizer::_handleNumber () {
   });
 
   if (isFp) {
-#if !defined(__APPLE__)
+#if defined(__GNUC__) && !defined(__llvm__)
     double value {};
     const auto r { std::from_chars (_buffer.current() - 1, _buffer.current() + len, value) };
     if (r.ptr == _buffer.current() + len) {

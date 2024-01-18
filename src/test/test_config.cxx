@@ -11,10 +11,10 @@
 
 
 // ----------------------------------------------------------------------------
-//
+// test_config
 // ----------------------------------------------------------------------------
 TEST (Config, test_config) {
-  cppconfig::Config config { R"({
+  constexpr const char *str { R"({
     "int": 123,
     "float": 1.5,
     "bool": true,
@@ -31,6 +31,8 @@ TEST (Config, test_config) {
     },
     "matrix": [ [ 1, 2 ], [ 3, 4 ] ]
   })" };
+
+  cppconfig::Config config { str };
 
   ASSERT_EQ (config.get<uint8_t> ("int").value(), 123);
   ASSERT_EQ (config.get<int32_t> ("int").value(), 123);

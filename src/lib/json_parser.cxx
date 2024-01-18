@@ -71,7 +71,7 @@ std::optional<JsonValue> JsonParser::_parseObject () {
 
           return std::nullopt;
         case JsonTokenId::kArrayBegin:
-          if (auto arr =_parseArray(); arr.has_value()) {
+          if (auto arr = _parseArray(); arr.has_value()) {
             map.emplace (std::move (k->value<std::string>()), std::move (arr.value()));
             break;
           }
