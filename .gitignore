@@ -2,4 +2,3 @@ build
 *.ignore
 .conan.*
 .ccache.*
-.vscode

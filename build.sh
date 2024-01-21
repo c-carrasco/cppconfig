@@ -108,6 +108,7 @@ if [[ $RUN_DOCKER -eq 1 ]]; then
     -v $PWD/.conan.$COMPILER/:/home/$USER/.conan \
     -v $PWD/.ccache.$COMPILER:/.ccache \
     -w /workspace/source \
+    --name $COMPILER \
     $DOCKER_IMAGE_NAME \
     $DOCKER_RUN_CMD
 
