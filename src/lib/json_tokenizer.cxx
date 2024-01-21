@@ -8,6 +8,7 @@
 #include <codecvt>
 #include <cstdlib>
 #include <locale>
+#include <vector>
 
 #include <cppconfig/json_tokenizer.h>
 
