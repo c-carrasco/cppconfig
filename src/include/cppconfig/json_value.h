@@ -6,7 +6,7 @@
 #ifndef __CPP_CONFIG_JSON_VALUE_H__
 #define __CPP_CONFIG_JSON_VALUE_H__
 #include <cassert>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <vector>
 
@@ -26,16 +26,20 @@ class JsonValue {
 
     /// @brief Constructs a JSON object value from a map of string to JSON values (move semantics).
     /// @param map The map representing the JSON object.
-    JsonValue (std::map<std::string, JsonValue> &&map): _token { JsonTokenId::kObjectBegin }, _map { std::move (map) } {
+    // JsonValue (std::unordered_map<std::string, JsonValue> &&map): _token { JsonTokenId::kObjectBegin }, _map { std::move (map) } {
+    JsonValue (std::unordered_map<std::string, JsonValue> &&map): _token { JsonTokenId::kObjectBegin } {
+      if (map.size())
+        _map = std::move (map);
       // empty
     }
 
     /// @brief Constructs a JSON array value from a vector of JSON values (move semantics).
     /// @param array The vector representing the JSON array.
-    JsonValue (std::vector<JsonValue> &&array): _token { JsonTokenId::kArrayBegin }, _array { std::move (array) } {
+    // JsonValue (std::vector<JsonValue> &&array): _token { JsonTokenId::kArrayBegin }, _array { std::move (array) } {
+    JsonValue (std::vector<JsonValue> &&array): _token { JsonTokenId::kArrayBegin } {
+      if (array.size()) _array = std::move (array);
       // empty
     }
-
 
     /// @brief Copy constructor for JsonValue.
     /// @param obj obj The JsonValue object to be copied.
@@ -60,12 +64,10 @@ class JsonValue {
 
     /// @brief Move constructor for JsonValue.
     /// @param obj The JsonValue object to be moved.
-    JsonValue (JsonValue &&obj) noexcept:
-      _token { std::move (obj._token) },
-      _map { std::move (obj._map) },
-      _array { std::move (obj._array) }
-    {
-      // empty
+    JsonValue (JsonValue &&obj) noexcept {
+      _token = std::move (obj._token);
+      if (obj._map.size()) _map = std::move (obj._map);
+      if (obj._array.size()) _array = std::move (obj._array);
     }
 
     /// @brief Move assignment operator for JsonValue.
@@ -73,8 +75,8 @@ class JsonValue {
     /// @return A reference to the current JsonValue instance after the move assignment.
     JsonValue & operator= (JsonValue &&obj) noexcept {
       _token = std::move (obj._token);
-      _map = std::move (obj._map);
-      _array = std::move (obj._array);
+      if (obj._map.size()) _map = std::move (obj._map);
+      if (obj._array.size()) _array = std::move (obj._array);
 
       return *this;
     }
@@ -115,7 +117,7 @@ class JsonValue {
     /// @return A const reference to the stored value.
     template<typename T>
     inline const T & get () const {
-      if constexpr (std::is_same_v<T, std::map<std::string, JsonValue>>) {
+      if constexpr (std::is_same_v<T, std::unordered_map<std::string, JsonValue>>) {
         return _map;
       }
       else if constexpr (std::is_same_v<T, std::vector<JsonValue>>) {
@@ -129,7 +131,7 @@ class JsonValue {
     /// @brief Provides access to the value associated with a key in a JSON object.
     /// @param k The key.
     /// @return A reference to the JSON value associated with the key.
-    JsonValue & operator[] (const std::string &k) {
+    inline JsonValue & operator[] (const std::string &k) {
       assert (_token.id() == JsonTokenId::kObjectBegin);
       return _map.find (k)->second;
     }
@@ -137,7 +139,7 @@ class JsonValue {
     /// @brief Provides const access to the value associated with a key in a JSON object.
     /// @param k The key.
     /// @return A const reference to the JSON value associated with the key.
-    const JsonValue & operator[] (const std::string &k) const {
+    inline const JsonValue & operator[] (const std::string &k) const {
       assert (_token.id() == JsonTokenId::kObjectBegin);
       return _map.find (k)->second;
     }
@@ -145,7 +147,7 @@ class JsonValue {
     /// @brief Provides access to the value at a specific index in a JSON array.
     /// @param i The index.
     /// @return A reference to the JSON value at the specified index.
-    JsonValue & operator[] (size_t i) {
+    inline JsonValue & operator[] (size_t i) {
       assert (_token.id() == JsonTokenId::kArrayBegin);
       return _array[i];
     }
@@ -153,7 +155,7 @@ class JsonValue {
     /// @brief Provides const access to the value at a specific index in a JSON array.
     /// @param i The index.
     /// @return A const reference to the JSON value at the specified index.
-    const JsonValue & operator[] (size_t i) const {
+    inline const JsonValue & operator[] (size_t i) const {
       assert (_token.id() == JsonTokenId::kArrayBegin);
       return _array[i];
     }
@@ -171,14 +173,16 @@ class JsonValue {
     inline const std::string & asString() const { return get<std::string>(); }
 
     /// @brief Gets the stored value as a JSON object.
-    inline const std::map<std::string, JsonValue> & asObject() const { return get<std::map<std::string, JsonValue>>(); }
+    inline const std::unordered_map<std::string, JsonValue> & asObject() const {
+      return get<std::unordered_map<std::string, JsonValue>>();
+    }
 
     /// @brief Gets the stored value as a JSON array.
     inline const std::vector<JsonValue> & asArray() const { return get<std::vector<JsonValue>>(); }
 
   private:
     JsonToken _token; ///< The underlying JSON token.
-    std::map<std::string, JsonValue> _map; ///< Map representation for JSON object.
+    std::unordered_map<std::string, JsonValue> _map; ///< Map representation for JSON object.
     std::vector<JsonValue> _array; ///< Vector representation for JSON array.
 };
 

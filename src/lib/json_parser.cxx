@@ -43,7 +43,7 @@ std::optional<JsonValue> JsonParser::parse (const char *data, size_t size) {
 // JsonParser::_parseObject
 // ----------------------------------------------------------------------------
 std::optional<JsonValue> JsonParser::_parseObject () {
-  std::map<std::string, JsonValue> map;
+  std::unordered_map<std::string, JsonValue> map;
 
   do {
     auto k { _tokenizer->next() };

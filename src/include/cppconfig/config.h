@@ -35,18 +35,33 @@ class Config {
     /// @tparam T The type of the configuration value.
     /// @param sv The key to look up in the configuration.
     /// @return An optional containing the retrieved value, or std::nullopt if the key is not found.
-    template<typename T>
-    std::optional<T> get (std::string_view sv) {
+    template<typename T = std::string>
+    inline std::optional<T> get (std::string_view sv) {
       const auto jsonVal { _getJsonValue (sv) };
       if (jsonVal.has_value()) {
-        if constexpr (std::is_same_v<T, bool>)
+        if constexpr (std::is_same_v<T, bool>) {
           return static_cast<T> (jsonVal.value().get().get<bool>());
-        else if constexpr (std::is_integral_v<T>)
+        }
+        else if constexpr (std::is_integral_v<T>) {
           return static_cast<T> (jsonVal.value().get().get<int64_t>());
-        else if constexpr (std::is_floating_point_v<T>)
+        }
+        else if constexpr (std::is_floating_point_v<T>) {
           return static_cast<T> (jsonVal.value().get().get<double>());
-        else
-          return jsonVal.value().get().get<T>(); // FIXME: handle arrays
+        }
+        else if constexpr (
+          (std::is_same_v<T, std::vector<std::string>>) ||
+          (std::is_same_v<T, std::vector<int64_t>>) ||
+          (std::is_same_v<T, std::vector<double>>) ||
+          (std::is_same_v<T, std::vector<bool>>)
+        ) {
+          T result;
+          for (const auto &jv: jsonVal.value().get().asArray())
+            result.push_back (jv.get<typename T::value_type>());
+          return result;
+        }
+        else {
+          return jsonVal.value().get().get<T>();
+        }
       }
 
       return std::nullopt;

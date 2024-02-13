@@ -5,7 +5,7 @@
 // ----------------------------------------------------------------------------
 #include <gtest/gtest.h>
 
-#include <cppconfig/json_tokenizer.h>
+#include <cppconfig/json_token.h>
 
 
 // ----------------------------------------------------------------------------
@@ -34,6 +34,7 @@ TEST (JsonToken, test_constructor) {
   ASSERT_EQ (jt10.id(), cppconfig::json::JsonTokenId::kValueBoolean);
   cppconfig::json::JsonToken jt11 { cppconfig::json::JsonTokenId::kValueNull };
   ASSERT_EQ (jt11.id(), cppconfig::json::JsonTokenId::kValueNull);
+  ASSERT_EQ (jt11.value<std::nullptr_t>(), nullptr);
   cppconfig::json::JsonToken jt12 { cppconfig::json::JsonTokenId::kError };
   ASSERT_EQ (jt12.id(), cppconfig::json::JsonTokenId::kError);
 
