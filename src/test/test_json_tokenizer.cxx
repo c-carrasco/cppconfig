@@ -22,7 +22,7 @@ constexpr const char * kJsonStr01 { R"({
 })"
 };
 
-constexpr const std::array<cppconfig::json::JsonTokenId, 45> kJsonId01 {
+const const std::array<cppconfig::json::JsonTokenId, 45> kJsonId01 {
   cppconfig::json::JsonTokenId::kObjectBegin,
   cppconfig::json::JsonTokenId::kValueString,
   cppconfig::json::JsonTokenId::kColon,
