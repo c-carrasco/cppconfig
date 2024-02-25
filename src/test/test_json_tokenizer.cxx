@@ -4,6 +4,8 @@
 // Copyright (c) 2023-2024 Carlos Carrasco
 // ----------------------------------------------------------------------------
 #include <cstring>
+#include <array>
+#include <any>
 
 #include <gtest/gtest.h>
 
@@ -22,7 +24,7 @@ constexpr const char * kJsonStr01 { R"({
 })"
 };
 
-const const std::array<cppconfig::json::JsonTokenId, 45> kJsonId01 {
+const std::array<cppconfig::json::JsonTokenId, 45> kJsonId01 {
   cppconfig::json::JsonTokenId::kObjectBegin,
   cppconfig::json::JsonTokenId::kValueString,
   cppconfig::json::JsonTokenId::kColon,
