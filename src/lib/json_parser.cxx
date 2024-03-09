@@ -46,9 +46,9 @@ std::optional<JsonValue> JsonParser::_parseObject () {
   std::unordered_map<std::string, JsonValue> map;
 
   do {
-    auto k { _tokenizer->next() };
-    auto c { _tokenizer->next() };
-    auto v { _tokenizer->next() };
+    auto k { _tokenizer->next() }; // key
+    auto c { _tokenizer->next() }; // colon
+    auto v { _tokenizer->next() }; // value
 
     if (
       k.has_value() && c.has_value() && v.has_value() &&

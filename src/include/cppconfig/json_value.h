@@ -8,6 +8,7 @@
 #include <cassert>
 #include <unordered_map>
 #include <string>
+#include <typeinfo>
 #include <vector>
 
 #include <cppconfig/json_tokenizer.h>
@@ -114,6 +115,22 @@ class JsonValue {
 
     /// @brief Gets the stored value as a specific type.
     /// \tparam T The type to retrieve.
+    /// @return A reference to the stored value.
+    template<typename T>
+    inline T & get () {
+      if constexpr (std::is_same_v<T, std::unordered_map<std::string, JsonValue>>) {
+        return _map;
+      }
+      else if constexpr (std::is_same_v<T, std::vector<JsonValue>>) {
+        return _array;
+      }
+      else {
+        return _token.value<T> ();
+      }
+    }
+
+    /// @brief Gets the stored value as a specific type.
+    /// \tparam T The type to retrieve.
     /// @return A const reference to the stored value.
     template<typename T>
     inline const T & get () const {
@@ -169,16 +186,39 @@ class JsonValue {
     /// @brief Gets the stored value as a floating-point number.
     inline double asFloat() const { return get<double>(); }
 
-    /// @brief Gets the stored value as a string.
+    /// @brief Gets the stored value as a const reference to a string.
     inline const std::string & asString() const { return get<std::string>(); }
 
-    /// @brief Gets the stored value as a JSON object.
+    /// @brief Gets the stored value as a reference to a string.
+    inline std::string & asString() { return get<std::string>(); }
+
+    /// @brief Gets the stored value as a const reference to a map.
     inline const std::unordered_map<std::string, JsonValue> & asObject() const {
       return get<std::unordered_map<std::string, JsonValue>>();
     }
 
-    /// @brief Gets the stored value as a JSON array.
+    /// @brief Gets the stored value as a reference to a map.
+    inline std::unordered_map<std::string, JsonValue> & asObject() {
+      return get<std::unordered_map<std::string, JsonValue>>();
+    }
+
+    /// @brief Gets the stored value as a const reference to a vector.
+    inline std::vector<JsonValue> & asArray() { return get<std::vector<JsonValue>>(); }
+
+    /// @brief Gets the stored value as a reference to a vector.
     inline const std::vector<JsonValue> & asArray() const { return get<std::vector<JsonValue>>(); }
+
+    /// @brief Gets the type of the value.
+    inline const std::type_info & type() const {
+      if (isBool()) return typeid(bool);
+      if (isInt()) return typeid(int64_t);
+      if (isFloat()) return typeid(double);
+      if (isString()) return typeid(std::string);
+      if (isNull()) return typeid(std::nullptr_t);
+      if (isObject()) return typeid(_map);
+      if (isArray()) return typeid(_array);
+      return typeid(void);
+    };
 
   private:
     JsonToken _token; ///< The underlying JSON token.

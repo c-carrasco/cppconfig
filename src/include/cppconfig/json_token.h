@@ -109,12 +109,29 @@ class JsonToken {
     /// @return The JsonTokenId of the token.
     inline JsonTokenId id() const { return _id; }
 
-    /// Returns the value of the token.
+    /// Returns a const reference to the value of the token.
     /// @tparam T The type of the value to retrieve.
     /// @return The value of the token as the specified type.
     /// @note This function performs a static assertion to ensure the requested type is valid.
     template<typename T>
     inline const T & value() const {
+      static_assert(
+        std::is_same_v<T, std::variant_alternative_t<0, decltype(_value)>> ||
+        std::is_same_v<T, std::variant_alternative_t<1, decltype(_value)>> ||
+        std::is_same_v<T, std::variant_alternative_t<2, decltype(_value)>> ||
+        std::is_same_v<T, std::variant_alternative_t<3, decltype(_value)>> ||
+        std::is_same_v<T, std::variant_alternative_t<4, decltype(_value)>>
+      );
+
+      return std::get<T> (_value);
+    }
+
+    /// Returns a reference to the value of the token.
+    /// @tparam T The type of the value to retrieve.
+    /// @return The value of the token as the specified type.
+    /// @note This function performs a static assertion to ensure the requested type is valid.
+    template<typename T>
+    inline T & value() {
       static_assert(
         std::is_same_v<T, std::variant_alternative_t<0, decltype(_value)>> ||
         std::is_same_v<T, std::variant_alternative_t<1, decltype(_value)>> ||
