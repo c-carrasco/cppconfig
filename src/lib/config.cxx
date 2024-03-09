@@ -3,28 +3,58 @@
 //
 // Copyright (c) 2023-2024 Carlos Carrasco
 // ----------------------------------------------------------------------------
+#include <unistd.h>
+#include <limits.h>
+
 #include <stdexcept>
+#include <format>
 
 #include <cppconfig/config.h>
 #include <cppconfig/mm_file.h>
+
+#if !defined(HOST_NAME_MAX) && defined(_POSIX_HOST_NAME_MAX)
+  #define HOST_NAME_MAX _POSIX_HOST_NAME_MAX
+#endif
 
 
 namespace cppconfig {
 
 // ----------------------------------------------------------------------------
+// Config::System::getHostName
+// ----------------------------------------------------------------------------
+const std::string & Config::System::getHostName() const {
+  static std::string hostName;
+
+  if (hostName.empty()) {
+    char buf[HOST_NAME_MAX + 1] = { 0, };
+    gethostname (buf, HOST_NAME_MAX);
+
+    hostName = buf;
+    std::transform (hostName.begin(), hostName.end(), hostName.begin(), [] (const auto c) {
+      return std::tolower (c);
+    });
+  }
+
+  return hostName;
+}
+
+// ----------------------------------------------------------------------------
+// Config::System::getEnvName
+// ----------------------------------------------------------------------------
+const std::string & Config::System::getEnvName() const {
+  static std::string env { std::getenv ("CPPCONFIG_ENV")? std::getenv ("CPPCONFIG_ENV") : "" };
+
+  return env;
+}
+
+// ----------------------------------------------------------------------------
 // Constructor
 // ----------------------------------------------------------------------------
-Config::Config (const std::filesystem::path &fileName) {
-  util::MMapFile<> mmFile {};
-
-  if (!mmFile.open (fileName))
-    throw std::ios_base::failure { "File '" + fileName.string() + "' not found" };
-
-  if (!parse (mmFile.data(), mmFile.bytes())) {
-    throw std::runtime_error {
-      "Parse error:" + std::to_string (_parser.error().line) + ", " + std::to_string (_parser.error().column)
-    };
-  }
+Config::Config (const std::filesystem::path &fileName, const System &system) {
+  if (std::filesystem::is_directory (fileName))
+    _loadFolder (fileName, system);
+  else
+    _root = _loadFile (fileName);
 }
 
 // ----------------------------------------------------------------------------
@@ -80,6 +110,61 @@ std::optional<std::reference_wrapper<json::JsonValue>> Config::_getJsonValue (co
   v = v.get()[str];
 
   return v;
+}
+
+// ----------------------------------------------------------------------------
+// Config::_loadFile
+// ----------------------------------------------------------------------------
+std::optional<json::JsonValue> Config::_loadFile (const std::filesystem::path &fileName) {
+  util::MMapFile<> mmFile {};
+
+  if (!mmFile.open (fileName))
+    throw std::ios_base::failure { "File '" + fileName.string() + "' not found" };
+
+  return _parser.parse (mmFile.data(), mmFile.bytes());
+}
+
+// ----------------------------------------------------------------------------
+// Config::_loadFolder
+// ----------------------------------------------------------------------------
+void Config::_loadFolder (const std::filesystem::path &folderName, const System &system) {
+  const auto defaultFileName { folderName / "default.json" };
+  const auto envFileName { (folderName / system.getEnvName()).replace_extension ("json") };
+  const auto hostFileName { (folderName / system.getHostName()).replace_extension ("json") };
+
+  _root = _loadFile (defaultFileName);
+  if (!_root.has_value())
+    throw std::runtime_error { defaultFileName.string() + ":" + _parser.error().str() };
+
+  if (std::filesystem::exists (envFileName)) {
+    auto envDoc = _loadFile (envFileName);
+
+    if (!envDoc.has_value())
+      throw std::runtime_error { envFileName.string() + ":" + _parser.error().str() };
+
+    _merge (envDoc.value(), _root.value());
+  }
+
+  if (std::filesystem::exists (hostFileName)) {
+    auto hostDoc = _loadFile (hostFileName);
+
+    if (!hostDoc.has_value())
+      throw std::runtime_error { hostFileName.string() + ":" + _parser.error().str() };
+
+    _merge (hostDoc.value(), _root.value());
+  }
+}
+
+// ----------------------------------------------------------------------------
+// Config::_merge
+// ----------------------------------------------------------------------------
+bool Config::_merge (json::JsonValue &src, json::JsonValue &dst) {
+  std::ignore = src;
+  std::ignore = dst;
+
+  // FIXME:
+
+  return true;
 }
 
 }

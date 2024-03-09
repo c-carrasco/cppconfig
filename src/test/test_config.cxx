@@ -8,7 +8,39 @@
 #include <gtest/gtest.h>
 
 #include <cppconfig/config.h>
+#include <cppconfig/path_util.h>
 
+
+// // ----------------------------------------------------------------------------
+// struct MockSystem: public cppconfig::Config::System {
+//   MockSystem (const char *h, const char *e): hostName { h }, env { e } {}
+
+//   const std::string & getHostName() const override {
+//     return hostName;
+//   }
+
+//   const std::string & getEnvName() const override {
+//     return env;
+//   }
+
+//   std::string hostName;
+//   std::string env;
+// };
+
+  // MockSystem mock { "myhostname", "myenvname" };
+
+// ----------------------------------------------------------------------------
+// test_config_file
+// ----------------------------------------------------------------------------
+TEST (Config, test_config_file) {
+  const auto fileName { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config01.json" };
+
+  cppconfig::Config config { fileName };
+
+  ASSERT_TRUE (config.get<bool> ("enabled").value());
+  ASSERT_EQ (config.get<std::string> ("name").value(), "test01");
+  ASSERT_EQ (config.get<int32_t> ("value").value(), 123);
+}
 
 // ----------------------------------------------------------------------------
 // test_config
@@ -64,3 +96,4 @@ TEST (Config, test_config) {
   ASSERT_EQ (array3[1], 1.0);
   ASSERT_FALSE (config.get ("do-not-exists").has_value());
 }
+

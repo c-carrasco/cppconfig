@@ -33,4 +33,15 @@ enable_testing()
 
 include (CTest)
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+  add_custom_target(CopyDataFolder ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/data ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/data
+  )
+else()
+  add_custom_target(CopyDataFolder ALL
+    COMMAND rm -f ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/data
+    COMMAND ln -s ${CMAKE_CURRENT_SOURCE_DIR}/data ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/data
+  )
+endif()
+
 add_subdirectory (src)

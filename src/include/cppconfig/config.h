@@ -16,9 +16,23 @@ namespace cppconfig {
 /// @brief Represents a configuration class for handling JSON configuration files.
 class Config {
   public:
+    /// @brief Class to get the host name and the environment variable
+    /// used for the Config class to load the configuration
+    struct System {
+      virtual ~System() {}
+      virtual const std::string & getHostName() const;
+      virtual const std::string & getEnvName() const;
+
+      static const System & instance() {
+        static System instance;
+
+        return instance;
+      }
+    };
+
     /// @brief Constructs a Config object with the specified file path.
     /// @param fileName The path to the configuration file.
-    Config (const std::filesystem::path &fileName);
+    Config (const std::filesystem::path &fileName, const System &system = System::instance());
 
     /// @brief Constructs a Config object with the provided JSON buffer.
     /// @param buffer The JSON buffer.
@@ -75,6 +89,12 @@ class Config {
     /// @param sv The key to look up in the configuration.
     /// @return An optional reference to the JSON value, or std::nullopt if the key is not found.
     std::optional<std::reference_wrapper<json::JsonValue>> _getJsonValue (const std::string_view &sv);
+
+
+    std::optional<json::JsonValue> _loadFile (const std::filesystem::path &fileName);
+    void _loadFolder (const std::filesystem::path &folderName, const System &system);
+    bool _merge (json::JsonValue &src, json::JsonValue &dst);
+
 };
 
 }
