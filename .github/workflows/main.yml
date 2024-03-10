@@ -21,8 +21,10 @@ jobs:
       - name: Build Release GCC 13 C++20
         run: ./build.sh docker=gcc13 release clean test doc
 
-      - name: Build Debug Clang 16 C++20 # https://github.com/google/googletest/issues/4097
-        run: ASAN_OPTIONS=alloc_dealloc_mismatch=0 ./build.sh docker=clang16 debug clean uban=on asan=on test
+      - name: Build Debug Clang 16 C++20
+        run: ./build.sh docker=clang16 debug clean uban=on asan=on test
+        env: # https://github.com/google/googletest/issues/4097
+          ASAN_OPTIONS: alloc_dealloc_mismatch=0
       - name: Build Release Clang 16 C++20
         run: ./build.sh docker=clang16 release clean test doc
 
