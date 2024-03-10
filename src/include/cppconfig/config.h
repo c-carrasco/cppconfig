@@ -16,8 +16,8 @@ namespace cppconfig {
 /// @brief Represents a configuration class for handling JSON configuration files.
 class Config {
   public:
-    /// @brief Class to get the host name and the environment variable
-    /// used for the Config class to load the configuration
+    /// @brief Class to get the host name and the environment variable used for the Config class to
+    // load the configuration.
     struct System {
       virtual ~System() {}
       virtual const std::string & getHostName() const;

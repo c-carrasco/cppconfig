@@ -159,10 +159,40 @@ void Config::_loadFolder (const std::filesystem::path &folderName, const System 
 // Config::_merge
 // ----------------------------------------------------------------------------
 bool Config::_merge (json::JsonValue &src, json::JsonValue &dst) {
-  std::ignore = src;
-  std::ignore = dst;
+  if (src.isObject()) {
+    for (auto itSrc = src.asObject().begin(); itSrc != src.asObject().end(); ++itSrc) {
+      const auto &key { itSrc->first };
 
-  // FIXME:
+      const auto itDst { dst.asObject().find (key) };
+      if (itDst == dst.asObject().end()) { // source item is NOT present in destination -> insert
+        if (!dst.asObject().emplace (key, itSrc->second).second)
+          return false; // could not be inserted
+      }
+      else { // source item is present in destination -> update
+        const auto &srcType { itSrc->second.type() };
+        const auto &dstType { itDst->second.type() };
+
+        if (srcType != dstType)
+          return false;
+
+        if (itSrc->second.isObject()) {
+          if (!_merge (itSrc->second, itDst->second))
+            return false;
+        }
+        else if (itSrc->second.isArray()) {
+          for (const auto &item: itSrc->second.asArray())
+            itDst->second.asArray().push_back (item);
+        }
+        else {
+          itDst->second = itSrc->second;
+        }
+      }
+    }
+  }
+  else if (src.isArray()) {
+    // FIXME: implement
+    assert (false);
+  }
 
   return true;
 }

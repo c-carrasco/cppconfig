@@ -11,35 +11,140 @@
 #include <cppconfig/path_util.h>
 
 
-// // ----------------------------------------------------------------------------
-// struct MockSystem: public cppconfig::Config::System {
-//   MockSystem (const char *h, const char *e): hostName { h }, env { e } {}
+// ----------------------------------------------------------------------------
+struct MockSystem: public cppconfig::Config::System {
+  MockSystem (const char *h, const char *e): hostName { h }, env { e } {}
 
-//   const std::string & getHostName() const override {
-//     return hostName;
-//   }
+  const std::string & getHostName() const override {
+    return hostName;
+  }
 
-//   const std::string & getEnvName() const override {
-//     return env;
-//   }
+  const std::string & getEnvName() const override {
+    return env;
+  }
 
-//   std::string hostName;
-//   std::string env;
-// };
+  std::string hostName;
+  std::string env;
+};
 
-  // MockSystem mock { "myhostname", "myenvname" };
+
+// ----------------------------------------------------------------------------
+// test_system
+// ----------------------------------------------------------------------------
+TEST (System, test_system) {
+  cppconfig::Config::System system {};
+
+  ASSERT_FALSE (system.getHostName().empty());
+  ASSERT_TRUE (system.getEnvName().empty());
+}
 
 // ----------------------------------------------------------------------------
 // test_config_file
 // ----------------------------------------------------------------------------
 TEST (Config, test_config_file) {
-  const auto fileName { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config01.json" };
+  const auto fileName { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config00.json" };
 
   cppconfig::Config config { fileName };
 
   ASSERT_TRUE (config.get<bool> ("enabled").value());
-  ASSERT_EQ (config.get<std::string> ("name").value(), "test01");
+  ASSERT_EQ (config.get<std::string> ("name").value(), "test00");
   ASSERT_EQ (config.get<int32_t> ("value").value(), 123);
+}
+
+// ----------------------------------------------------------------------------
+// test_folder_default
+// ----------------------------------------------------------------------------
+TEST (Config, test_folder_default) {
+  const auto folder { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config01" };
+
+  cppconfig::Config config { folder };
+
+  ASSERT_EQ (config.get<std::string> ("name").value(), "test01");
+  ASSERT_EQ (config.get<float> ("value").value(), 10.0);
+  ASSERT_EQ (config.get<std::vector<int64_t>> ("array").value()[0], 1);
+  ASSERT_EQ (config.get<std::vector<int64_t>> ("array").value()[1], 2);
+  ASSERT_EQ (config.get<std::vector<int64_t>> ("array").value()[2], 3);
+}
+
+// ----------------------------------------------------------------------------
+// test_folder_load_def_env
+// ----------------------------------------------------------------------------
+TEST (Config, test_folder_load_def_env) {
+  const auto folder { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config02" };
+  const MockSystem mock { "myhostname", "myenvname" };
+
+  cppconfig::Config config { folder, mock };
+
+  ASSERT_EQ (config.get<bool> ("key_1").value(), false);
+  ASSERT_EQ (config.get<int32_t> ("key_2").value(), 100);
+  ASSERT_EQ (config.get<uint32_t> ("key_3").value(), 20);
+  ASSERT_EQ (config.get<std::string> ("sub_key_1.key_1_1").value(), std::string { "val1" });
+  ASSERT_EQ (config.get<float> ("sub_key_1.key_1_2").value(), 2.0);
+  ASSERT_EQ (config.get<bool> ("sub_key_1.new").value(), true);
+  ASSERT_EQ (
+    config.get<std::vector<std::string>> ("sub_key_1.sub_key_1_3.key_1_3_1").value(),
+    (std::vector<std::string> { "one", "foo" })
+  );
+}
+
+// ----------------------------------------------------------------------------
+// test_folder_load_def_env_host
+// ----------------------------------------------------------------------------
+TEST (Config, test_folder_load_def_env_host) {
+  const auto folder { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config03" };
+  const MockSystem mock { "myhostname", "myenvname" };
+
+  cppconfig::Config config { folder, mock };
+
+  ASSERT_EQ (config.get<bool> ("key_1"), false);
+  ASSERT_EQ (config.get<int32_t> ("key_2"), 100);
+  ASSERT_EQ (config.get<uint32_t> ("key_3"), 20);
+  ASSERT_EQ (config.get<std::string> ("sub_key_1.key_1_1"), std::string ("val1111"));
+  ASSERT_EQ (config.get<float> ("sub_key_1.key_1_2"), 2.0);
+  ASSERT_EQ (config.get<bool> ("sub_key_1.new"), true);
+  ASSERT_EQ (
+    config.get<std::vector<std::string>> ("sub_key_1.sub_key_1_3.key_1_3_1").value(),
+    (std::vector<std::string> { "one", "two", "foo" })
+  );
+}
+
+// ----------------------------------------------------------------------------
+// test_folder_load_def_host
+// ----------------------------------------------------------------------------
+TEST (Config, test_folder_load_def_host) {
+  MockSystem mock { "myhostname", "" };
+  const auto folder { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config03" };
+
+  cppconfig::Config config { folder, mock };
+
+  ASSERT_EQ (config.get<bool> ("key_1"), false);
+  ASSERT_EQ (config.get<int32_t> ("key_2"), 8);
+  ASSERT_EQ (config.get<uint32_t> ("key_3"), 20);
+  ASSERT_EQ (config.get<std::string> ("sub_key_1.key_1_1"), std::string ("val1111"));
+  ASSERT_EQ (config.get<float> ("sub_key_1.key_1_2"), 1.5);
+  ASSERT_EQ (
+    config.get<std::vector<std::string>> ("sub_key_1.sub_key_1_3.key_1_3_1").value(),
+    (std::vector<std::string> { "one", "two", "foo" })
+  );
+}
+
+// ----------------------------------------------------------------------------
+// test_folder_array
+// ----------------------------------------------------------------------------
+// TEST (Config, test_folder_array) {
+//   const MockSystem mock { "myhostname", "myenvname" };
+//   const auto folder { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config05" };
+
+//   cppconfig::Config config { folder, mock };
+// }
+
+// ----------------------------------------------------------------------------
+// test_folder_missing_default
+// ----------------------------------------------------------------------------
+TEST (Config, test_folder_missing_default) {
+  const auto folder { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config04" };
+
+  ASSERT_THROW (cppconfig::Config config (folder), std::ios_base::failure);
 }
 
 // ----------------------------------------------------------------------------

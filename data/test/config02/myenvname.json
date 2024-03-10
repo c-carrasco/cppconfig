@@ -1,0 +1,11 @@
+{
+  "key_1": false,
+  "key_2": 100,
+  "sub_key_1": {
+    "key_1_2": 2.0,
+    "new": true,
+    "sub_key_1_3": {
+      "key_1_3_1": [ "foo" ]
+    }
+  }
+}
