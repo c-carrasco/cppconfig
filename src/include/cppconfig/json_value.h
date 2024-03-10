@@ -218,7 +218,13 @@ class JsonValue {
       if (isObject()) return typeid(_map);
       if (isArray()) return typeid(_array);
       return typeid(void);
-    };
+    }
+
+    /// @brief Merges the contents of the source JSON value into the destination JSON value.
+    /// @param src The source JSON value to be merged.
+    /// @param dst The destination JSON value into which the source is merged.
+    /// @return true if the merge operation is successful, false otherwise.
+    static bool merge (json::JsonValue &src, json::JsonValue &dst);
 
   private:
     JsonToken _token; ///< The underlying JSON token.

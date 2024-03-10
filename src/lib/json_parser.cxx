@@ -23,6 +23,8 @@ static_assert (
 // JsonParser::parse
 // ----------------------------------------------------------------------------
 std::optional<JsonValue> JsonParser::parse (const char *data, size_t size) {
+  if (size == 0) size = std::strlen(data);
+
   _tokenizer = std::make_unique<JsonTokenizer> (Buffer { data, size });
 
   auto token { _tokenizer->next() };

@@ -142,7 +142,7 @@ void Config::_loadFolder (const std::filesystem::path &folderName, const System 
     if (!envDoc.has_value())
       throw std::runtime_error { envFileName.string() + ":" + _parser.error().str() };
 
-    _merge (envDoc.value(), _root.value());
+    json::JsonValue::merge (envDoc.value(), _root.value());
   }
 
   if (std::filesystem::exists (hostFileName)) {
@@ -151,50 +151,8 @@ void Config::_loadFolder (const std::filesystem::path &folderName, const System 
     if (!hostDoc.has_value())
       throw std::runtime_error { hostFileName.string() + ":" + _parser.error().str() };
 
-    _merge (hostDoc.value(), _root.value());
+    json::JsonValue::merge (hostDoc.value(), _root.value());
   }
-}
-
-// ----------------------------------------------------------------------------
-// Config::_merge
-// ----------------------------------------------------------------------------
-bool Config::_merge (json::JsonValue &src, json::JsonValue &dst) {
-  if (src.isObject()) {
-    for (auto itSrc = src.asObject().begin(); itSrc != src.asObject().end(); ++itSrc) {
-      const auto &key { itSrc->first };
-
-      const auto itDst { dst.asObject().find (key) };
-      if (itDst == dst.asObject().end()) { // source item is NOT present in destination -> insert
-        if (!dst.asObject().emplace (key, itSrc->second).second)
-          return false; // could not be inserted
-      }
-      else { // source item is present in destination -> update
-        const auto &srcType { itSrc->second.type() };
-        const auto &dstType { itDst->second.type() };
-
-        if (srcType != dstType)
-          return false;
-
-        if (itSrc->second.isObject()) {
-          if (!_merge (itSrc->second, itDst->second))
-            return false;
-        }
-        else if (itSrc->second.isArray()) {
-          for (const auto &item: itSrc->second.asArray())
-            itDst->second.asArray().push_back (item);
-        }
-        else {
-          itDst->second = itSrc->second;
-        }
-      }
-    }
-  }
-  else if (src.isArray()) {
-    // FIXME: implement
-    assert (false);
-  }
-
-  return true;
 }
 
 }

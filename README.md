@@ -7,7 +7,7 @@ Configure your C++ Apps
 
 - [X] JSON Tokenizer
 - [X] JSON Parser
-- [ ] Logic
+- [X] Logic
 - [ ] Documentation
 
 # Introduction

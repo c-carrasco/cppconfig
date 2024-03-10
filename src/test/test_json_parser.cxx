@@ -132,3 +132,25 @@ TEST (JsonParser, test_error) {
   ASSERT_EQ (parser.error().line, 3);
   ASSERT_EQ (parser.error().column, 10);
 }
+
+// FIXME:
+
+// ----------------------------------------------------------------------------
+// test_empty_object
+// ----------------------------------------------------------------------------
+TEST (JsonParser, DISABLED_test_empty_object) {
+   cppconfig::json::JsonParser parser;
+
+  const auto root { parser.parse (R"({ "obj1": {} })") };
+  ASSERT_TRUE (root.has_value());
+}
+
+// ----------------------------------------------------------------------------
+// test_empty_array
+// ----------------------------------------------------------------------------
+TEST (JsonParser, DISABLED_test_empty_array) {
+   cppconfig::json::JsonParser parser;
+
+  const auto root { parser.parse (R"({ "obj1": [] })") };
+  ASSERT_TRUE (root.has_value());
+}

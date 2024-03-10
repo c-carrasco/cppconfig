@@ -93,8 +93,6 @@ class Config {
 
     std::optional<json::JsonValue> _loadFile (const std::filesystem::path &fileName);
     void _loadFolder (const std::filesystem::path &folderName, const System &system);
-    bool _merge (json::JsonValue &src, json::JsonValue &dst);
-
 };
 
 }

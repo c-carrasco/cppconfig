@@ -76,7 +76,7 @@ class JsonParser {
     /// @param buffer Pointer to the buffer containing JSON data.
     /// @param size Size of the buffer.
     /// @return Optional containing the parsed JSON value if successful, otherwise nullopt.
-    std::optional<JsonValue> parse (const char *buffer, size_t size);
+    std::optional<JsonValue> parse (const char *buffer, size_t size=0);
 
     /// @brief Get the last parsing error, if any.
     /// @return Reference to the last parsing error.
