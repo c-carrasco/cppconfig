@@ -49,6 +49,10 @@ std::optional<JsonValue> JsonParser::_parseObject () {
 
   do {
     auto k { _tokenizer->next() }; // key
+
+    if (k.has_value() && k->id() == JsonTokenId::kObjectEnd)
+      return JsonValue { std::move (map) };
+
     auto c { _tokenizer->next() }; // colon
     auto v { _tokenizer->next() }; // value
 
@@ -131,6 +135,8 @@ std::optional<JsonValue> JsonParser::_parseArray () {
             break;
           }
           return std::nullopt;
+        case JsonTokenId::kArrayEnd:
+          return JsonValue { std::move (array) };
         default:
           return _setError (ErrorCode::kExpectAny);
       }

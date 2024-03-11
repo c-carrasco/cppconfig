@@ -183,15 +183,14 @@ TEST (JsonValue, test_merge_array_basic_types) {
   cppconfig::json::JsonParser parser2;
 
   auto root1 { parser1.parse (R"({ "obj1": { "a1": [1, 2] } })") };
-  auto root2 { parser2.parse (R"({ "obj1": { "a1": [3] } })") };
+  auto root2 { parser2.parse (R"({ "obj1": { "a1": [] } })") };
 
   ASSERT_TRUE (root1.has_value());
   ASSERT_TRUE (root2.has_value());
   ASSERT_TRUE (cppconfig::json::JsonValue::merge (root1.value(), root2.value()));
-  ASSERT_EQ (root2.value()["obj1"]["a1"].asArray().size(), 3);
-  ASSERT_EQ (root2.value()["obj1"]["a1"][0].asInt(), 3);
-  ASSERT_EQ (root2.value()["obj1"]["a1"][1].asInt(), 1);
-  ASSERT_EQ (root2.value()["obj1"]["a1"][2].asInt(), 2);
+  ASSERT_EQ (root2.value()["obj1"]["a1"].asArray().size(), 2);
+  ASSERT_EQ (root2.value()["obj1"]["a1"][0].asInt(), 1);
+  ASSERT_EQ (root2.value()["obj1"]["a1"][1].asInt(), 2);
 }
 
 

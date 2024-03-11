@@ -138,19 +138,19 @@ TEST (JsonParser, test_error) {
 // ----------------------------------------------------------------------------
 // test_empty_object
 // ----------------------------------------------------------------------------
-TEST (JsonParser, DISABLED_test_empty_object) {
-   cppconfig::json::JsonParser parser;
+TEST (JsonParser, test_empty_object) {
+  ASSERT_TRUE (cppconfig::json::JsonParser().parse (R"({})"));
 
-  const auto root { parser.parse (R"({ "obj1": {} })") };
+  const auto root { cppconfig::json::JsonParser().parse (R"({ "obj1": {} })") };
   ASSERT_TRUE (root.has_value());
+  ASSERT_EQ (root.value()["obj1"].asObject().size(), 0);
 }
 
 // ----------------------------------------------------------------------------
 // test_empty_array
 // ----------------------------------------------------------------------------
-TEST (JsonParser, DISABLED_test_empty_array) {
-   cppconfig::json::JsonParser parser;
-
-  const auto root { parser.parse (R"({ "obj1": [] })") };
-  ASSERT_TRUE (root.has_value());
+TEST (JsonParser, test_empty_array) {
+  ASSERT_TRUE (cppconfig::json::JsonParser().parse (R"([])"));
+  ASSERT_TRUE (cppconfig::json::JsonParser().parse (R"([ [ [ ] ] ])"));
+  ASSERT_TRUE (cppconfig::json::JsonParser().parse (R"({ "obj1": [] })"));
 }
