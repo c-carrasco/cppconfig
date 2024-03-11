@@ -107,6 +107,7 @@ if [[ $RUN_DOCKER -eq 1 ]]; then
     -v $PWD:/workspace/source \
     -v $PWD/.conan.$COMPILER/:/home/$USER/.conan \
     -v $PWD/.ccache.$COMPILER:/.ccache \
+    -e ASAN_OPTIONS=$ASAN_OPTIONS \
     -w /workspace/source \
     --name $COMPILER \
     $DOCKER_IMAGE_NAME \
