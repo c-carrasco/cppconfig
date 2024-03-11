@@ -17,7 +17,7 @@ namespace cppconfig {
 class Config {
   public:
     /// @brief Class to get the host name and the environment variable used for the Config class to
-    // load the configuration.
+    /// load the configuration.
     struct System {
       virtual ~System() {}
       virtual const std::string & getHostName() const;
@@ -64,13 +64,33 @@ class Config {
         }
         else if constexpr (
           (std::is_same_v<T, std::vector<std::string>>) ||
-          (std::is_same_v<T, std::vector<int64_t>>) ||
           (std::is_same_v<T, std::vector<double>>) ||
+          (std::is_same_v<T, std::vector<int64_t>>) ||
           (std::is_same_v<T, std::vector<bool>>)
         ) {
           T result;
           for (const auto &jv: jsonVal.value().get().asArray())
             result.push_back (jv.get<typename T::value_type>());
+          return result;
+        }
+        else if constexpr (
+          (std::is_same_v<T, std::vector<int32_t>>) ||
+          (std::is_same_v<T, std::vector<int16_t>>) ||
+          (std::is_same_v<T, std::vector<int8_t>>) ||
+          (std::is_same_v<T, std::vector<uint64_t>>) ||
+          (std::is_same_v<T, std::vector<uint32_t>>) ||
+          (std::is_same_v<T, std::vector<uint16_t>>) ||
+          (std::is_same_v<T, std::vector<uint8_t>>)
+        ) {
+          T result;
+          for (const auto &jv: jsonVal.value().get().asArray())
+            result.push_back (static_cast<typename T::value_type> (jv.get<int64_t>()));
+          return result;
+        }
+        else if constexpr (std::is_same_v<T, std::vector<float>>) {
+          T result;
+          for (const auto &jv: jsonVal.value().get().asArray())
+            result.push_back (static_cast<typename T::value_type> (jv.get<double>()));
           return result;
         }
         else {
@@ -82,16 +102,25 @@ class Config {
     }
 
   private:
-    json::JsonParser _parser {}; ///< JSON parser for parsing configuration data.
-    std::optional<json::JsonValue> _root {}; ///< Root JSON value representing the configuration.
+    json::JsonParser _parser {}; /// JSON parser for parsing configuration data.
+    std::optional<json::JsonValue> _root {}; /// Root JSON value representing the configuration.
 
-    /// @brief  Gets a reference to the JSON value associated with the specified key.
+    /// @brief Gets a reference to the JSON value associated with the specified key.
     /// @param sv The key to look up in the configuration.
     /// @return An optional reference to the JSON value, or std::nullopt if the key is not found.
     std::optional<std::reference_wrapper<json::JsonValue>> _getJsonValue (const std::string_view &sv);
 
-
+    /// @brief Loads a JSON file and returns its parsed content.
+    /// @param fileName The path to the JSON file to be loaded.
+    /// @return An optional containing the parsed JSON content if successful, or an empty optional
+    ///         if the file is not found or an error occurs during parsing.
+    /// @throws std::ios_base::failure if the specified file is not found.
     std::optional<json::JsonValue> _loadFile (const std::filesystem::path &fileName);
+
+    /// @brief Loads configuration files from a specified folder based on the given system.
+    /// @param folderName The path to the folder containing configuration files.
+    /// @param system The system information used to determine the environment and host-specific files.
+    /// @throws std::runtime_error if any of the configuration files cannot be loaded or parsed successfully.
     void _loadFolder (const std::filesystem::path &folderName, const System &system);
 };
 
