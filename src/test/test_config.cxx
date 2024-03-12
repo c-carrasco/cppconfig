@@ -110,6 +110,24 @@ TEST (Config, test_key_with_dot) {
 }
 
 // ----------------------------------------------------------------------------
+// test_array
+// ----------------------------------------------------------------------------
+TEST (Config, test_array) {
+  cppconfig::Config config0 { R"({ "array": [ { "a": 1 }, { "b": 2.0 }, { "c": "str" } ] })" };
+  ASSERT_EQ (config0.get<int32_t> ("array[0].a").value(), 1);
+  ASSERT_EQ (config0.get<float> ("array[1].b").value(), 2.0);
+  ASSERT_EQ (config0.get<std::string> ("array[2].c").value(), "str");
+
+  cppconfig::Config config1 { R"([ 1.0, true, [ 1, [ 2 ] ], { "a": [ 3, [ 4 ] ] } ])" };
+  ASSERT_EQ (config1.get<float> ("[0]").value(), 1.0);
+  ASSERT_EQ (config1.get<bool> ("[1]").value(), true);
+  ASSERT_EQ (config1.get<int32_t> ("[2][0]").value(), 1);
+  ASSERT_EQ (config1.get<int32_t> ("[2][1][0]").value(), 2);
+  ASSERT_EQ (config1.get<int32_t> ("[3].a[0]").value(), 3);
+  ASSERT_EQ (config1.get<int32_t> ("[3].a[1][0]").value(), 4);
+}
+
+// ----------------------------------------------------------------------------
 // test_empty_config
 // ----------------------------------------------------------------------------
 TEST (Config, test_empty_config) {

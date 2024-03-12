@@ -84,30 +84,66 @@ bool Config::parse (const char *buffer, size_t len) {
 std::optional<std::reference_wrapper<json::JsonValue>> Config::_getJsonValue (const std::string_view &sv) {
   std::reference_wrapper<json::JsonValue> v { _root.value() };
 
+  int32_t index { -1 };
   std::string str {};
   str.reserve (sv.size());
   for (size_t i { 0 }; i < sv.size(); ++i) {
-    if ((sv[i] == '\\') && (i + 1) && (sv[i + 1] == '.')) {
+    if ((sv[i] == '\\') && (sv.size() > i + 1) && (sv[i + 1] == '.')) {
       ++i;
       str.push_back('.');
     }
-    else if (sv[i] == '.') {
-      if (!v.get().exists (str))
-        return std::nullopt;
+    else if ((sv[i] == '.') || (sv[i] == ']')) {
+      if (!str.empty()) {
+        if (!v.get().exists (str))
+          return std::nullopt;
 
-      v = v.get()[str];
+        v = v.get()[str];
 
-      str.clear();
+        str.clear();
+      }
+
+      if (index != -1) {
+        if (!v.get().isArray() || (index >= std::ssize (v.get().asArray())))
+          return std::nullopt;
+
+        v = v.get()[index];
+
+        index = -1;
+      }
+    }
+    else if ((sv[i] == '[')) {
+      index = 0;
+      for (i = i + 1; i < sv.size(); ++i) {
+        if (std::isdigit (sv[i])) {
+          index = index * 10 + (static_cast<size_t>(sv[i]) - 48);
+        }
+        else if (sv[i] == ']') {
+          --i;
+          break;
+        }
+        else {
+          return std::nullopt;
+        }
+      }
     }
     else {
       str.push_back (sv[i]);
     }
   }
 
-  if (!v.get().exists (str))
-    return std::nullopt;
+  if (!str.empty()) {
+    if (!v.get().exists (str))
+      return std::nullopt;
 
-  v = v.get()[str];
+    v = v.get()[str];
+  }
+
+  if (index != -1) {
+    if (!v.get().isArray() || (index >= std::ssize (v.get().asArray())))
+      return std::nullopt;
+
+    v = v.get()[index];
+  }
 
   return v;
 }
