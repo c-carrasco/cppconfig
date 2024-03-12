@@ -69,7 +69,6 @@ std::optional<JsonToken> JsonTokenizer::next() {
   return std::nullopt;
 }
 
-
 // ----------------------------------------------------------------------------
 // JsonTokenizer::_handleString
 // ----------------------------------------------------------------------------
@@ -92,7 +91,6 @@ JsonToken JsonTokenizer::_handleString () {
 
       continue;
     }
-
 
     switch (c) {
       case 'b':
@@ -151,6 +149,8 @@ JsonToken JsonTokenizer::_handleNumber () {
   const size_t len = _buffer.count ([ &isFp ] (const char c) {
     switch (c) {
       case '.':
+      case 'e':
+      case 'E':
         isFp = true;
         break;
       case ' ':
@@ -172,7 +172,7 @@ JsonToken JsonTokenizer::_handleNumber () {
       return JsonToken { value };
     }
 #else
-    char * end = const_cast<char *> (_buffer.current() + len);
+    auto *end { const_cast<char *> (_buffer.current() + len) };
     const auto value { std::strtod (_buffer.current() - 1, &end) };
     if ((value != 0) || (end != _buffer.current())) {
       _buffer.forward (len);

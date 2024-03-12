@@ -224,7 +224,7 @@ class JsonValue {
     /// @param src The source JSON value to be merged.
     /// @param dst The destination JSON value into which the source is merged.
     /// @return true if the merge operation is successful, false otherwise.
-    static bool merge (json::JsonValue &src, json::JsonValue &dst);
+    static bool merge (const json::JsonValue &src, json::JsonValue &dst);
 
   private:
     JsonToken _token; ///< The underlying JSON token.

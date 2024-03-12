@@ -13,14 +13,14 @@
 // test_constructor
 // ----------------------------------------------------------------------------
 TEST (JsonValue, test_constructor) {
-  cppconfig::json::JsonValue v0 { cppconfig::json::JsonToken {} };
-  cppconfig::json::JsonValue v1 { cppconfig::json::JsonToken { true } };
-  cppconfig::json::JsonValue v2 { cppconfig::json::JsonToken { int64_t(123) } };
-  cppconfig::json::JsonValue v3 { cppconfig::json::JsonToken { double(1.2) } };
-  cppconfig::json::JsonValue v4 { cppconfig::json::JsonToken { std::string_view { "str" } } };
-  cppconfig::json::JsonValue v5 { cppconfig::json::JsonToken { cppconfig::json::JsonTokenId::kValueNull } };
-  cppconfig::json::JsonValue v6 { std::unordered_map<std::string, cppconfig::json::JsonValue> { { "t1", v1 } } };
-  cppconfig::json::JsonValue v7 { std::vector<cppconfig::json::JsonValue> { {} } };
+  const cppconfig::json::JsonValue v0 { cppconfig::json::JsonToken {} };
+  const cppconfig::json::JsonValue v1 { cppconfig::json::JsonToken { true } };
+  const cppconfig::json::JsonValue v2 { cppconfig::json::JsonToken { int64_t(123) } };
+  const cppconfig::json::JsonValue v3 { cppconfig::json::JsonToken { double(1.2) } };
+  const cppconfig::json::JsonValue v4 { cppconfig::json::JsonToken { std::string_view { "str" } } };
+  const cppconfig::json::JsonValue v5 { cppconfig::json::JsonToken { cppconfig::json::JsonTokenId::kValueNull } };
+  const cppconfig::json::JsonValue v6 { std::unordered_map<std::string, cppconfig::json::JsonValue> { { "t1", v1 } } };
+  const cppconfig::json::JsonValue v7 { std::vector<cppconfig::json::JsonValue> { {} } };
 
   ASSERT_TRUE (v0.empty());
   ASSERT_TRUE (v1.isBool());

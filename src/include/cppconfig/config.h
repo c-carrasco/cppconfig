@@ -16,13 +16,23 @@ namespace cppconfig {
 /// @brief Represents a configuration class for handling JSON configuration files.
 class Config {
   public:
-    /// @brief Class to get the host name and the environment variable used for the Config class to
-    /// load the configuration.
+    /// @brief Represents a system configuration interface.
+    /// Provides an interface to retrieve the host name and the environment variable name
+    /// that are used by the Config class to load configuration settings.
     struct System {
+      /// @brief Virtual destructor.
       virtual ~System() {}
+
+      /// @brief Retrieves the host name of the system.
+      /// @return A constant reference to a std::string containing the host name.
       virtual const std::string & getHostName() const;
+
+      /// @brief Retrieves the environment variable name used for configuration.
+      /// @return A constant reference to a std::string containing the environment variable name.
       virtual const std::string & getEnvName() const;
 
+      /// @brief Returns a reference to the singleton instance of the System class.
+      /// @return A constant reference to the singleton System instance.
       static const System & instance() {
         static System instance;
 

@@ -24,7 +24,7 @@ namespace cppconfig::json {
 //   source array to the destination array.
 // - If neither of the above cases applies, the destination is updated to match the source.
 // ----------------------------------------------------------------------------
-bool JsonValue::merge (json::JsonValue &src, json::JsonValue &dst) {
+bool JsonValue::merge (const json::JsonValue &src, json::JsonValue &dst) {
   if (!src.isNull() && !dst.isNull() && (src.type() != dst.type()))
     return false;
 
