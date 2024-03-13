@@ -13,7 +13,35 @@
 
 namespace cppconfig {
 
-/// @brief Represents a configuration class for handling JSON configuration files.
+/// @class Config
+/// @brief Manages application configuration by handling JSON configuration files.
+///
+/// This class enables the definition and management of a set of default parameters,
+/// which can be extended or overridden based on different deployment environments
+/// (e.g., development, QA, staging, production) and specific host names. Configuration
+/// files should be placed within the application's directory structure. They can
+/// subsequently be extended or overridden through the use of environment variables
+/// and host names, allowing for flexible and dynamic configuration management.
+///
+/// The class primarily relies on an environment variable (`CPPCONFIG_ENV`) to determine
+/// the deployment environment, and the system's host name to apply host-specific
+/// configurations.
+///
+/// The CPPCONFIG_ENV environment variable should contain the deployment environment name of the
+/// application. It is crucial for determining the order in which configuration files
+/// are loaded. Common values for `CPPCONFIG_ENV` include `development`, `production`, etc.
+///
+/// The system's host name (as returned by the `hostname` command in lowercase) is
+/// utilized as a part of the configuration file naming convention, enabling
+/// host-specific configurations.
+///
+/// The class loads configuration files in the following order, allowing each step
+/// to override or extend the previous:
+///  @li default.json - The base configuration.
+///  @li {deployment}.json - Deployment-specific configuration, where `{deployment}`
+///                          is derived from the `CPPCONFIG_ENV` environment variable.
+///  @li {hostname}.json - Host-specific configuration, where `{hostname}` is the
+///                        system's host name in lowercase.
 class Config {
   public:
     /// @brief Represents a system configuration interface.
@@ -57,11 +85,18 @@ class Config {
 
     /// @brief Retrieves a configuration value of the specified type.
     /// @tparam T The type of the configuration value.
-    /// @param sv The key to look up in the configuration.
+    /// The supported types for T are:
+    ///   @li integer: int64_t, int32_t, int16_t, int8_t, uint64_t, uint32_t, uint16_t and uint8_t
+    ///   @li float-point: float, double
+    ///   @li string: std::string
+    ///   @li bloolean: bool
+    ///   @li vector: std::vector<integer|float-point|string|boolean>
+    /// @param key The key to look up in the configuration, supporting dot notation for nested objects
+    /// and array indexing with '[]' (e.g., "key1.array[3].key2").
     /// @return An optional containing the retrieved value, or std::nullopt if the key is not found.
     template<typename T = std::string>
-    inline std::optional<T> get (std::string_view sv) {
-      const auto jsonVal { _getJsonValue (sv) };
+    inline std::optional<T> get (std::string_view key) {
+      const auto jsonVal { _getJsonValue (key) };
       if (jsonVal.has_value()) {
         if constexpr (std::is_same_v<T, bool>) {
           return static_cast<T> (jsonVal.value().get().get<bool>());

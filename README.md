@@ -21,9 +21,9 @@ Configurations are stored in configuration files within your application, and ca
 # Features
 
 - Cross-platform compatible.
-- Simple: Get started fast.
+- Simple: Get started fast (with no external dependencies)
 - Powerful: For multi-node enterprise deployment.
-- Flexible - Supporting multiple config file formats.
+- Flexible - Supporting single config files or multifile folder config.
 
 # Quick Start
 
@@ -54,6 +54,7 @@ $> vim config/production.json
 {
   "database": {
     "host": "postgresql://db-prod.acme.com",
+    "port": 5432
   }
 }
 ```
@@ -86,6 +87,11 @@ Build & launch your app:
 $> g++ ... -o my_app
 $> CPPCONFIG_ENV=production ./my_app config
 host: postgresql://db-prod.acme.com
+port: 5432
+db: Users
+
+$> ./my_app config
+host: postgresql://localhost
 port: 1234
 db: Users
 ```
@@ -96,7 +102,7 @@ Before diving into `cpp-config`, make sure you have the following tools and depe
 
 - Conan 1.x
 - CMake 3.20 or higer
-- GCC, Clang or AppleClang
+- GCC +13, Clang +16 or AppleClang +15
 - GNU Make or ninja
 - Docker (optional)
 - Doxygen (for generating documentation)
@@ -150,17 +156,41 @@ Examples:
 
 # How to use it
 
-TBC
+## 1. Include the `config.h` header.
 
-# Example
+```CPP
+#include <cppconfig/config.h>
+```
 
-TBC
+**Note:** All functions, classes, structures, enums, ...  reside within the `cppconfig` namespace.
+
+## 2. Load your configuration.
+
+```CPP
+cppconfig::Config config { path };
+```
+
+## 3. Get the configuration values.
+
+```CPP
+if (const auto port = config.get<int16_t> ("customer.db.port"); port.has_value()) {
+  ...
+  db.port = port.value();
+  ...
+  db.connect();
+}
+```
 
 # Installation
 
-TBC
+To use the library, follow these steps (for projects based on CMake):
+
+- 1. Copy the repository into your project (eg `3rd-party/cppconfig`).
+- 2. Add the `src/lib` subdirectory in your CMake project: `add_subdirectory(3rd-party/cppconfig/src/lib)`
+- 3. Link against _cppconfig_: `target_link_libraries(${YOUR_TARGET} cppconfig)`
 
 # Contributing
+
 We welcome contributions from the community.
 
 # References
