@@ -33,7 +33,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">MemInspect<span id="projectnumber">&#160;0.1.cc82021</span>
+   <div id="projectname">MemInspect<span id="projectnumber">&#160;0.1.1ca9cee</span>
    </div>
   </td>
  </tr>
@@ -100,7 +100,66 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__2workspace_2source_2doc_2readme"></a></p>
-<p>TBD </p>
+<p>A C++ Library for Configuration Management</p>
+<h1><a class="anchor" id="autotoc_md0"></a>
+Overview</h1>
+<p>CppConfig is a C++ library designed to simplify the management of configuration files in applications. It supports JSON-based configuration, enabling developers to define default parameters that can be extended or overridden based on different deployment environments (e.g., development, QA, staging, production) and/or host names. The library uses environment variables and the host name to determine which configuration files to load, making it highly flexible and adaptable to various deployment strategies.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Key Features</h1>
+<ul>
+<li>Environment-Specific Configuration: CppConfig leverages an environment variable, CPPCONFIG_ENV, to identify the deployment environment (e.g., development, production). This feature allows for seamless transitions between different stages of development by loading environment-specific configuration files.</li>
+<li>Host-Specific Configuration: The library uses the system's host name (in lowercase) to load host-specific configuration files, providing a convenient way to apply unique settings to different servers or development machines.</li>
+<li>File Load Order: CppConfig prioritizes configuration files in the following order:<ul>
+<li>1. default.json - Serves as the base configuration.</li>
+<li>2. {deployment}.json - Overrides or extends the base configuration based on the deployment environment.</li>
+<li>3. {hostname}.json - Further customizes the configuration for specific hosts.</li>
+</ul>
+</li>
+<li>Flexible Value Retrieval: CppConfig supports retrieving configuration values of various types, including integers, floating-point numbers, strings, booleans, and vectors of these types. This flexibility ensures that developers can easily access the configuration data they need in the appropriate format.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md2"></a>
+Usage</h1>
+<h2><a class="anchor" id="autotoc_md3"></a>
+Defining Configuration Files</h2>
+<p>Configuration files should be in JSON format and placed within your application's directory structure following the file load order mentioned above. Here's an example of a default.json file:</p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;database&quot;: {</div>
+<div class="line">    &quot;host&quot;: &quot;localhost&quot;,</div>
+<div class="line">    &quot;port&quot;: 3306</div>
+<div class="line">  },</div>
+<div class="line">  &quot;logging&quot;: {</div>
+<div class="line">    &quot;level&quot;: &quot;info&quot;,</div>
+<div class="line">    &quot;file&quot;: &quot;app.log&quot;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+Environment Variable</h2>
+<p>To specify the deployment environment, set the CPPCONFIG_ENV environment variable: </p><div class="fragment"><div class="line">export CPPCONFIG_ENV=development</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
+Loading Configuration in Your Application</h2>
+<p>Include the CPPConfig library and use the Config class to load and access your application's configuration: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cppconfig/config.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">  cppconfig::Config config(<span class="stringliteral">&quot;path/to/config/folder&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> dbHost = config.get&lt;std::string&gt;(<span class="stringliteral">&quot;database.host&quot;</span>).value_or(<span class="stringliteral">&quot;default_host&quot;</span>);</div>
+<div class="line">  <span class="keyword">auto</span> dbPort = config.get&lt;<span class="keywordtype">int</span>&gt;(<span class="stringliteral">&quot;database.port&quot;</span>).value_or(3306);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Use the configuration values in your application</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
+Extending or Overriding Configuration (Optional)</h2>
+<p>Create additional JSON files named after the deployment environment and/or host name to override or extend the base configuration. For example, development.json could override the logging level to debug for development purposes: </p><div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;logging&quot;: {</div>
+<div class="line">    &quot;level&quot;: &quot;debug&quot;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
+System Class</h2>
+<p>The Config::System interface provides methods for retrieving the host name and the environment variable name. It's utilized internally by the Config class but can also be extended if you need to customize the way these values are retrieved.</p>
+<h1><a class="anchor" id="autotoc_md8"></a>
+Conclusion</h1>
+<p>CPPConfig is a powerful library for managing application configurations in C++. By organizing configurations into JSON files and leveraging environment variables and host names, it offers a highly flexible and scalable approach to configuration management across different environments and deployment scenarios. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

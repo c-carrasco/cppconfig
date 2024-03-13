@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cppconfig_20library_0',['CppConfig Library',['../index.html',1,'']]]
+  ['application_0',['Loading Configuration in Your Application',['../index.html#autotoc_md5',1,'']]]
 ];

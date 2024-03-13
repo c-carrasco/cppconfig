@@ -25,7 +25,7 @@
 var NAVTREE =
 [
   [ "MemInspect", "index.html", [
-    [ "CppConfig Library", "index.html", null ]
+    [ "CppConfig Library", "index.html", "index" ]
   ] ]
 ];
 
