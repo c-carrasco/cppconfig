@@ -22,7 +22,6 @@ Configurations are stored in configuration files within your application, and ca
 
 - Cross-platform compatible.
 - Simple: Get started fast (with no external dependencies)
-- Powerful: For multi-node enterprise deployment.
 - Flexible - Supporting single config files or multifile folder config.
 
 # Quick Start
@@ -95,6 +94,10 @@ host: postgresql://localhost
 port: 1234
 db: Users
 ```
+
+# Documentation
+
+See [documentation](https://c-carrasco.github.io/cppconfig/) for details.
 
 # Prerequisites to build this project
 
