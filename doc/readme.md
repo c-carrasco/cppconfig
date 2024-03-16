@@ -70,6 +70,69 @@ Create additional JSON files named after the deployment environment and/or host 
 
 The Config::System interface provides methods for retrieving the host name and the environment variable name. It's utilized internally by the Config class but can also be extended if you need to customize the way these values are retrieved.
 
+## Getting Values
+
+### Basic types
+
+- Integers: int64_t, int32_t, int16_t, int8_t, uint64_t, uint32_t, uint16_t, uint8_t
+- Float Points: float, double
+- strings: std::string
+- Booleans: bool
+
+Examples:
+```JSON
+{
+  "product": {
+    "id": 123456,
+    "name": "Laptop XYZ ACME",
+    "out_of_stock": false,
+    "price": 9999.90,
+    "currency": "USD"
+  }
+}
+```
+
+```CPP
+const auto id { config<uint64_t> ("product.id") };
+const auto name { config<std::string> ("product.name" ) };
+const auto outOfStock { config<bool> ("product.out_of_stock") };
+const auto price { config<float> ("product.price") };
+```
+
+### Arrays
+
+- Vector of integers: std::vector<int64_t>, std::vector<int32_t>, std::vector<int16_t>, std::vector<int8_t>, std::vector<uint64_t>, std::vector<uint32_t>, std::vector<uint16_t>, std::vector<uint8_t>
+- Vector of Float Points: std::vector<float>, std::vector<double>
+- Vector of Booleans: std::vector<bool>
+
+Examples:
+```JSON
+{
+  "myserver": {
+    "ip": [ "1.2.3.4", "6.7.8.9" ]
+  },
+  "host": [
+    {
+      "name": "acme.com",
+      "port": 1234
+    },
+    {
+      "name": "foo.com",
+      "port": 5678
+    }
+  ]
+}
+```
+
+```CPP
+const auto ips { config<std::vector<std::string>> ("myserver.ip") };
+
+const auto host0 { config<std::string> ("host[0].name") };
+const auto host1 { config<std::string> ("host[1].name") };
+const auto port0 { config<uint16_t> ("host[0].port") };
+const auto port1 { config<uint16_t> ("host[1].port") };
+```
+
 # Conclusion
 
-CPPConfig is a powerful library for managing application configurations in C++. By organizing configurations into JSON files and leveraging environment variables and host names, it offers a highly flexible and scalable approach to configuration management across different environments and deployment scenarios.
+CppConfig is a powerful library for managing application configurations in C++. By organizing configurations into JSON files and leveraging environment variables and host names, it offers a highly flexible and scalable approach to configuration management across different environments and deployment scenarios.
