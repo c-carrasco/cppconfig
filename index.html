@@ -33,7 +33,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CppConfig<span id="projectnumber">&#160;0.1.4f4fae5</span>
+   <div id="projectname">CppConfig<span id="projectnumber">&#160;0.1.e66051f</span>
    </div>
   </td>
  </tr>
@@ -158,9 +158,60 @@ Extending or Overriding Configuration (Optional)</h2>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
 System Class</h2>
 <p>The Config::System interface provides methods for retrieving the host name and the environment variable name. It's utilized internally by the Config class but can also be extended if you need to customize the way these values are retrieved.</p>
-<h1><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md8"></a>
+Getting Values</h2>
+<h3><a class="anchor" id="autotoc_md9"></a>
+Basic types</h3>
+<ul>
+<li>Integers: int64_t, int32_t, int16_t, int8_t, uint64_t, uint32_t, uint16_t, uint8_t</li>
+<li>Float Points: float, double</li>
+<li>strings: std::string</li>
+<li>Booleans: bool</li>
+</ul>
+<p>Examples: </p><div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;product&quot;: {</div>
+<div class="line">    &quot;id&quot;: 123456,</div>
+<div class="line">    &quot;name&quot;: &quot;Laptop XYZ ACME&quot;,</div>
+<div class="line">    &quot;out_of_stock&quot;: false,</div>
+<div class="line">    &quot;price&quot;: 9999.90,</div>
+<div class="line">    &quot;currency&quot;: &quot;USD&quot;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> <span class="keywordtype">id</span> { config&lt;uint64_t&gt; (<span class="stringliteral">&quot;product.id&quot;</span>) };</div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> name { config&lt;std::string&gt; (<span class="stringliteral">&quot;product.name&quot;</span> ) };</div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> outOfStock { config&lt;bool&gt; (<span class="stringliteral">&quot;product.out_of_stock&quot;</span>) };</div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> price { config&lt;float&gt; (<span class="stringliteral">&quot;product.price&quot;</span>) };</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md10"></a>
+Arrays</h3>
+<ul>
+<li>Vector of integers: std::vector&lt;int64_t&gt;, std::vector&lt;int32_t&gt;, std::vector&lt;int16_t&gt;, std::vector&lt;int8_t&gt;, std::vector&lt;uint64_t&gt;, std::vector&lt;uint32_t&gt;, std::vector&lt;uint16_t&gt;, std::vector&lt;uint8_t&gt;</li>
+<li>Vector of Float Points: std::vector&lt;float&gt;, std::vector&lt;double&gt;</li>
+<li>Vector of Booleans: std::vector&lt;bool&gt;</li>
+</ul>
+<p>Examples: </p><div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;myserver&quot;: {</div>
+<div class="line">    &quot;ip&quot;: [ &quot;1.2.3.4&quot;, &quot;6.7.8.9&quot; ]</div>
+<div class="line">  },</div>
+<div class="line">  &quot;host&quot;: [</div>
+<div class="line">    {</div>
+<div class="line">      &quot;name&quot;: &quot;acme.com&quot;,</div>
+<div class="line">      &quot;port&quot;: 1234</div>
+<div class="line">    },</div>
+<div class="line">    {</div>
+<div class="line">      &quot;name&quot;: &quot;foo.com&quot;,</div>
+<div class="line">      &quot;port&quot;: 5678</div>
+<div class="line">    }</div>
+<div class="line">  ]</div>
+<div class="line">}</div>
+</div><!-- fragment --><div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> ips { config&lt;std::vector&lt;std::string&gt;&gt; (<span class="stringliteral">&quot;myserver.ip&quot;</span>) };</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> host0 { config&lt;std::string&gt; (<span class="stringliteral">&quot;host[0].name&quot;</span>) };</div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> host1 { config&lt;std::string&gt; (<span class="stringliteral">&quot;host[1].name&quot;</span>) };</div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> port0 { config&lt;uint16_t&gt; (<span class="stringliteral">&quot;host[0].port&quot;</span>) };</div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> port1 { config&lt;uint16_t&gt; (<span class="stringliteral">&quot;host[1].port&quot;</span>) };</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md11"></a>
 Conclusion</h1>
-<p>CPPConfig is a powerful library for managing application configurations in C++. By organizing configurations into JSON files and leveraging environment variables and host names, it offers a highly flexible and scalable approach to configuration management across different environments and deployment scenarios. </p>
+<p>CppConfig is a powerful library for managing application configurations in C++. By organizing configurations into JSON files and leveraging environment variables and host names, it offers a highly flexible and scalable approach to configuration management across different environments and deployment scenarios. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
