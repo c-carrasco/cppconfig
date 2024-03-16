@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MemInspect: CppConfig Library</title>
+<title>CppConfig: CppConfig Library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">MemInspect<span id="projectnumber">&#160;0.1.1ca9cee</span>
+   <div id="projectname">CppConfig<span id="projectnumber">&#160;0.1.4f4fae5</span>
    </div>
   </td>
  </tr>
@@ -140,13 +140,14 @@ Loading Configuration in Your Application</h2>
 <p>Include the CPPConfig library and use the Config class to load and access your application's configuration: </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cppconfig/config.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">  cppconfig::Config config(<span class="stringliteral">&quot;path/to/config/folder&quot;</span>);</div>
+<div class="line">  <a class="code hl_class" href="classcppconfig_1_1Config.html">cppconfig::Config</a> config(<span class="stringliteral">&quot;path/to/config/folder&quot;</span>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> dbHost = config.get&lt;std::string&gt;(<span class="stringliteral">&quot;database.host&quot;</span>).value_or(<span class="stringliteral">&quot;default_host&quot;</span>);</div>
 <div class="line">  <span class="keyword">auto</span> dbPort = config.get&lt;<span class="keywordtype">int</span>&gt;(<span class="stringliteral">&quot;database.port&quot;</span>).value_or(3306);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Use the configuration values in your application</span></div>
 <div class="line">}</div>
+<div class="ttc" id="aclasscppconfig_1_1Config_html"><div class="ttname"><a href="classcppconfig_1_1Config.html">cppconfig::Config</a></div><div class="ttdoc">Manages application configuration by handling JSON configuration files.</div><div class="ttdef"><b>Definition</b> config.h:45</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
 Extending or Overriding Configuration (Optional)</h2>
 <p>Create additional JSON files named after the deployment environment and/or host name to override or extend the base configuration. For example, development.json could override the logging level to debug for development purposes: </p><div class="fragment"><div class="line">{</div>

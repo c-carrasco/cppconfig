@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['environment_20variable_0',['Environment Variable',['../index.html#autotoc_md4',1,'']]],
-  ['extending_20or_20overriding_20configuration_20optional_1',['Extending or Overriding Configuration (Optional)',['../index.html#autotoc_md6',1,'']]]
+  ['data_0',['data',['../classcppconfig_1_1util_1_1MMapFile.html#a48af5aa78788de7f3c5e825da151d3bd',1,'cppconfig::util::MMapFile']]],
+  ['defining_20configuration_20files_1',['Defining Configuration Files',['../index.html#autotoc_md3',1,'']]]
 ];

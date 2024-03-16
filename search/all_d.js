@@ -1,0 +1,11 @@
+var searchData=
+[
+  ['open_0',['open',['../classcppconfig_1_1util_1_1MMapFile.html#a305087ceaa80df753863c343a2325b38',1,'cppconfig::util::MMapFile']]],
+  ['operator_3c_3c_1',['operator&lt;&lt;',['../structcppconfig_1_1json_1_1JsonParser_1_1Error.html#ad9484ca43f21e1035ce55d2a551295aa',1,'cppconfig::json::JsonParser::Error::operator&lt;&lt;'],['../classcppconfig_1_1json_1_1JsonToken.html#a2003bb47fb26cfb6d98dbde2052de4c2',1,'cppconfig::json::JsonToken::operator&lt;&lt;']]],
+  ['operator_3d_2',['operator=',['../classcppconfig_1_1json_1_1JsonToken.html#a3caa7bf315aca3c6e663229ea43d142d',1,'cppconfig::json::JsonToken::operator=(const JsonToken &amp;obj)'],['../classcppconfig_1_1json_1_1JsonToken.html#af9ee98222eb9ae25e6839c9ebdf23673',1,'cppconfig::json::JsonToken::operator=(JsonToken &amp;&amp;obj) noexcept'],['../classcppconfig_1_1json_1_1JsonValue.html#a067139e6c9699ddc956c34fc6f8437a8',1,'cppconfig::json::JsonValue::operator=(const JsonValue &amp;obj)'],['../classcppconfig_1_1json_1_1JsonValue.html#abf5f199efd1ae2f1555bc5a01fecab78',1,'cppconfig::json::JsonValue::operator=(JsonValue &amp;&amp;obj) noexcept'],['../classcppconfig_1_1util_1_1MMapFile.html#a0826d81386bbcb6631e24e48bb6f78a5',1,'cppconfig::util::MMapFile::operator=()']]],
+  ['operator_5b_5d_3',['operator[]',['../classcppconfig_1_1json_1_1JsonValue.html#a446c9536c1ca0449a32e94f904c8aef4',1,'cppconfig::json::JsonValue::operator[](const std::string &amp;k)'],['../classcppconfig_1_1json_1_1JsonValue.html#a89ae0347f6aa06d786808c0d3d0ad905',1,'cppconfig::json::JsonValue::operator[](const std::string &amp;k) const'],['../classcppconfig_1_1json_1_1JsonValue.html#aa9c6b1cd5eb850f326c62510b04d1df2',1,'cppconfig::json::JsonValue::operator[](size_t i)'],['../classcppconfig_1_1json_1_1JsonValue.html#a638bcd1ae869a452103ce76c7d261b91',1,'cppconfig::json::JsonValue::operator[](size_t i) const']]],
+  ['optional_4',['Extending or Overriding Configuration (Optional)',['../index.html#autotoc_md6',1,'']]],
+  ['or_20overriding_20configuration_20optional_5',['Extending or Overriding Configuration (Optional)',['../index.html#autotoc_md6',1,'']]],
+  ['overriding_20configuration_20optional_6',['Extending or Overriding Configuration (Optional)',['../index.html#autotoc_md6',1,'']]],
+  ['overview_7',['Overview',['../index.html#autotoc_md0',1,'']]]
+];

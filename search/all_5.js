@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['in_20your_20application_0',['Loading Configuration in Your Application',['../index.html#autotoc_md5',1,'']]]
+  ['features_0',['Key Features',['../index.html#autotoc_md1',1,'']]],
+  ['files_1',['Defining Configuration Files',['../index.html#autotoc_md3',1,'']]]
 ];
