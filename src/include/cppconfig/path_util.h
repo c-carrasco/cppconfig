@@ -3,13 +3,14 @@
 //
 // Copyright (c) 2023-2024 Carlos Carrasco
 // ----------------------------------------------------------------------------
-#ifndef __CPP_CONFIG_MEM_MAP_FILE_H__
-#define __CPP_CONFIG_MEM_MAP_FILE_H__
+#ifndef __CPP_CONFIG_UTIL_PATH_UTIL_H__
+#define __CPP_CONFIG_UTIL_PATH_UTIL_H__
 #include <filesystem>
 
 
 namespace cppconfig::util {
 
+/// @brief Provides utility functions related to filesystem paths.
 class PathUtil {
   public:
     //! @brief Retrieves the path of the executable file of the current process.
