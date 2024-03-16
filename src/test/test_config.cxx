@@ -42,7 +42,7 @@ TEST (System, test_system) {
 // test_array_types
 // ----------------------------------------------------------------------------
 TEST (Config, test_array_types) {
-  cppconfig::Config config0 { R"({ "array": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] })" };
+  const cppconfig::Config config0 { R"({ "array": [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] })" };
   ASSERT_EQ (config0.get<std::vector<int64_t>>  ("array").value()[0], 1);
   ASSERT_EQ (config0.get<std::vector<int32_t>>  ("array").value()[1], 2);
   ASSERT_EQ (config0.get<std::vector<int16_t>>  ("array").value()[2], 3);
@@ -52,15 +52,15 @@ TEST (Config, test_array_types) {
   ASSERT_EQ (config0.get<std::vector<uint16_t>> ("array").value()[6], 7);
   ASSERT_EQ (config0.get<std::vector<uint8_t>>  ("array").value()[7], 8);
 
-  cppconfig::Config config1 { R"({ "array": [ 1.0, 2.0 ] })" };
+  const cppconfig::Config config1 { R"({ "array": [ 1.0, 2.0 ] })" };
   ASSERT_EQ (config1.get<std::vector<float>>  ("array").value()[0], 1.0);
   ASSERT_EQ (config1.get<std::vector<double>> ("array").value()[1], 2.0);
 
-  cppconfig::Config config2 { R"({ "array": [ true, false ] })" };
+  const cppconfig::Config config2 { R"({ "array": [ true, false ] })" };
   ASSERT_EQ (config2.get<std::vector<bool>> ("array").value()[0], true);
   ASSERT_EQ (config2.get<std::vector<bool>> ("array").value()[1], false);
 
-  cppconfig::Config config3 { R"({ "array": [ "hello", "world" ] })" };
+  const cppconfig::Config config3 { R"({ "array": [ "hello", "world" ] })" };
   ASSERT_EQ (config3.get<std::vector<std::string>> ("array").value()[0], "hello");
   ASSERT_EQ (config3.get<std::vector<std::string>> ("array").value()[1], "world");
 }
@@ -173,7 +173,7 @@ TEST (Config, test_folder_load_def_env) {
   const auto folder { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config02" };
   const MockSystem mock { "myhostname", "myenvname" };
 
-  cppconfig::Config config { folder, mock };
+  const cppconfig::Config config { folder, mock };
 
   ASSERT_EQ (config.get<bool> ("key_1").value(), false);
   ASSERT_EQ (config.get<int32_t> ("key_2").value(), 100);
@@ -194,7 +194,7 @@ TEST (Config, test_folder_load_def_env_host) {
   const auto folder { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config03" };
   const MockSystem mock { "myhostname", "myenvname" };
 
-  cppconfig::Config config { folder, mock };
+  const cppconfig::Config config { folder, mock };
 
   ASSERT_EQ (config.get<bool> ("key_1"), false);
   ASSERT_EQ (config.get<int32_t> ("key_2"), 100);
@@ -215,7 +215,7 @@ TEST (Config, test_folder_load_def_host) {
   MockSystem mock { "myhostname", "" };
   const auto folder { cppconfig::util::PathUtil::getProgramDirPath() / "data" / "test" / "config03" };
 
-  cppconfig::Config config { folder, mock };
+  const cppconfig::Config config { folder, mock };
 
   ASSERT_EQ (config.get<bool> ("key_1"), false);
   ASSERT_EQ (config.get<int32_t> ("key_2"), 8);

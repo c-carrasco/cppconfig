@@ -81,8 +81,8 @@ bool Config::parse (const char *buffer, size_t len) {
 // ----------------------------------------------------------------------------
 // Config::_getJsonValue
 // ----------------------------------------------------------------------------
-std::optional<std::reference_wrapper<json::JsonValue>> Config::_getJsonValue (const std::string_view &sv) {
-  std::reference_wrapper<json::JsonValue> v { _root.value() };
+std::optional<std::reference_wrapper<const json::JsonValue>> Config::_getJsonValue (const std::string_view &sv) const {
+  std::reference_wrapper<const json::JsonValue> v { _root.value() };
 
   int32_t index { -1 };
   std::string str {};

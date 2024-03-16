@@ -95,7 +95,7 @@ class Config {
     /// and array indexing with '[]' (e.g., "key1.array[3].key2").
     /// @return An optional containing the retrieved value, or std::nullopt if the key is not found.
     template<typename T = std::string>
-    inline std::optional<T> get (std::string_view key) {
+    inline std::optional<T> get (std::string_view key) const {
       const auto jsonVal { _getJsonValue (key) };
       if (jsonVal.has_value()) {
         if constexpr (std::is_same_v<T, bool>) {
@@ -153,7 +153,7 @@ class Config {
     /// @brief Gets a reference to the JSON value associated with the specified key.
     /// @param sv The key to look up in the configuration.
     /// @return An optional reference to the JSON value, or std::nullopt if the key is not found.
-    std::optional<std::reference_wrapper<json::JsonValue>> _getJsonValue (const std::string_view &sv);
+    std::optional<std::reference_wrapper<const json::JsonValue>> _getJsonValue (const std::string_view &sv) const;
 
     /// @brief Loads a JSON file and returns its parsed content.
     /// @param fileName The path to the JSON file to be loaded.
