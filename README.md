@@ -3,13 +3,6 @@ Configure your C++ Apps
 
 [![ci](https://github.com/c-carrasco/cppconfig/actions/workflows/main.yml/badge.svg)](https://github.com/c-carrasco/cppconfig/actions/workflows/main.yml)
 
-# TODO
-
-- [X] JSON Tokenizer
-- [X] JSON Parser
-- [X] Logic
-- [ ] Documentation
-
 # Introduction
 
 CppConfig organizes hierarchical configurations for your app deployments.
