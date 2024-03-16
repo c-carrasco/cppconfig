@@ -33,7 +33,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CppConfig<span id="projectnumber">&#160;1.0.7faf5a4</span>
+   <div id="projectname">CppConfig<span id="projectnumber">&#160;1.0.eae43c0</span>
    </div>
   </td>
  </tr>
@@ -109,28 +109,28 @@ $(document).ready(function(){initNavTree('path__util_8h_source.html',''); initRe
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">//</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">// Copyright (c) 2023-2024 Carlos Carrasco</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// ----------------------------------------------------------------------------</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef __CPP_CONFIG_MEM_MAP_FILE_H__</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define __CPP_CONFIG_MEM_MAP_FILE_H__</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef __CPP_CONFIG_UTIL_PATH_UTIL_H__</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define __CPP_CONFIG_UTIL_PATH_UTIL_H__</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span>cppconfig::util {</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classcppconfig_1_1util_1_1PathUtil.html">   13</a></span><span class="keyword">class </span><a class="code hl_class" href="classcppconfig_1_1util_1_1PathUtil.html">PathUtil</a> {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classcppconfig_1_1util_1_1PathUtil.html#a14165a54651080bdf7230a111dec512e">   16</a></span>    [[nodiscard]] <span class="keyword">static</span> std::filesystem::path <a class="code hl_function" href="classcppconfig_1_1util_1_1PathUtil.html#a14165a54651080bdf7230a111dec512e">getModuleFileName</a>();</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classcppconfig_1_1util_1_1PathUtil.html#adb02669452afb8135ceaa04831c33f3b">   19</a></span>    [[nodiscard]] <span class="keyword">inline</span> <span class="keyword">static</span> std::filesystem::path <a class="code hl_function" href="classcppconfig_1_1util_1_1PathUtil.html#adb02669452afb8135ceaa04831c33f3b">getProgramDirPath</a>() { <span class="keywordflow">return</span> <a class="code hl_function" href="classcppconfig_1_1util_1_1PathUtil.html#a14165a54651080bdf7230a111dec512e">getModuleFileName</a>().parent_path(); }</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>};</div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classcppconfig_1_1util_1_1PathUtil.html">   14</a></span><span class="keyword">class </span><a class="code hl_class" href="classcppconfig_1_1util_1_1PathUtil.html">PathUtil</a> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classcppconfig_1_1util_1_1PathUtil.html#a14165a54651080bdf7230a111dec512e">   17</a></span>    [[nodiscard]] <span class="keyword">static</span> std::filesystem::path <a class="code hl_function" href="classcppconfig_1_1util_1_1PathUtil.html#a14165a54651080bdf7230a111dec512e">getModuleFileName</a>();</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classcppconfig_1_1util_1_1PathUtil.html#adb02669452afb8135ceaa04831c33f3b">   20</a></span>    [[nodiscard]] <span class="keyword">inline</span> <span class="keyword">static</span> std::filesystem::path <a class="code hl_function" href="classcppconfig_1_1util_1_1PathUtil.html#adb02669452afb8135ceaa04831c33f3b">getProgramDirPath</a>() { <span class="keywordflow">return</span> <a class="code hl_function" href="classcppconfig_1_1util_1_1PathUtil.html#a14165a54651080bdf7230a111dec512e">getModuleFileName</a>().parent_path(); }</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>};</div>
 </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>}</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclasscppconfig_1_1util_1_1PathUtil_html"><div class="ttname"><a href="classcppconfig_1_1util_1_1PathUtil.html">cppconfig::util::PathUtil</a></div><div class="ttdef"><b>Definition</b> path_util.h:13</div></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>}</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclasscppconfig_1_1util_1_1PathUtil_html"><div class="ttname"><a href="classcppconfig_1_1util_1_1PathUtil.html">cppconfig::util::PathUtil</a></div><div class="ttdoc">Provides utility functions related to filesystem paths.</div><div class="ttdef"><b>Definition</b> path_util.h:14</div></div>
 <div class="ttc" id="aclasscppconfig_1_1util_1_1PathUtil_html_a14165a54651080bdf7230a111dec512e"><div class="ttname"><a href="classcppconfig_1_1util_1_1PathUtil.html#a14165a54651080bdf7230a111dec512e">cppconfig::util::PathUtil::getModuleFileName</a></div><div class="ttdeci">static std::filesystem::path getModuleFileName()</div><div class="ttdoc">Retrieves the path of the executable file of the current process.</div></div>
-<div class="ttc" id="aclasscppconfig_1_1util_1_1PathUtil_html_adb02669452afb8135ceaa04831c33f3b"><div class="ttname"><a href="classcppconfig_1_1util_1_1PathUtil.html#adb02669452afb8135ceaa04831c33f3b">cppconfig::util::PathUtil::getProgramDirPath</a></div><div class="ttdeci">static std::filesystem::path getProgramDirPath()</div><div class="ttdoc">Retrieves the path to the folder containing the executable file of the current process.</div><div class="ttdef"><b>Definition</b> path_util.h:19</div></div>
+<div class="ttc" id="aclasscppconfig_1_1util_1_1PathUtil_html_adb02669452afb8135ceaa04831c33f3b"><div class="ttname"><a href="classcppconfig_1_1util_1_1PathUtil.html#adb02669452afb8135ceaa04831c33f3b">cppconfig::util::PathUtil::getProgramDirPath</a></div><div class="ttdeci">static std::filesystem::path getProgramDirPath()</div><div class="ttdoc">Retrieves the path to the folder containing the executable file of the current process.</div><div class="ttdef"><b>Definition</b> path_util.h:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

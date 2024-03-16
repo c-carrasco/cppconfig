@@ -2,7 +2,7 @@ var annotated_dup =
 [
     [ "cppconfig", null, [
       [ "json", null, [
-        [ "Buffer", "classcppconfig_1_1json_1_1Buffer.html", null ],
+        [ "Buffer", "classcppconfig_1_1json_1_1Buffer.html", "classcppconfig_1_1json_1_1Buffer" ],
         [ "JsonParser", "classcppconfig_1_1json_1_1JsonParser.html", "classcppconfig_1_1json_1_1JsonParser" ],
         [ "JsonToken", "classcppconfig_1_1json_1_1JsonToken.html", "classcppconfig_1_1json_1_1JsonToken" ],
         [ "JsonTokenizer", "classcppconfig_1_1json_1_1JsonTokenizer.html", "classcppconfig_1_1json_1_1JsonTokenizer" ],

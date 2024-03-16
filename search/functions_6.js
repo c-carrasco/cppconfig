@@ -1,13 +1,8 @@
 var searchData=
 [
-  ['id_0',['id',['../classcppconfig_1_1json_1_1JsonToken.html#a6eda2832b1946d2fc26426cfa9a139ad',1,'cppconfig::json::JsonToken']]],
-  ['instance_1',['instance',['../structcppconfig_1_1Config_1_1System.html#aec3e16af1e6e3a0ed35ba46df74f299a',1,'cppconfig::Config::System']]],
-  ['isarray_2',['isArray',['../classcppconfig_1_1json_1_1JsonValue.html#aa6c29a3f5cbfe29e6dd152a3b3cf01a8',1,'cppconfig::json::JsonValue']]],
-  ['isbool_3',['isBool',['../classcppconfig_1_1json_1_1JsonValue.html#adc6bdb51bf6fc993165695dba5ad79c3',1,'cppconfig::json::JsonValue']]],
-  ['isfloat_4',['isFloat',['../classcppconfig_1_1json_1_1JsonValue.html#a15a86e39dac00379af640be93d6cd2ac',1,'cppconfig::json::JsonValue']]],
-  ['isint_5',['isInt',['../classcppconfig_1_1json_1_1JsonValue.html#aa8126f51aa270994f76320c33346698c',1,'cppconfig::json::JsonValue']]],
-  ['isnull_6',['isNull',['../classcppconfig_1_1json_1_1JsonValue.html#a2f3602061157e5c634ba125106056f7b',1,'cppconfig::json::JsonValue']]],
-  ['isobject_7',['isObject',['../classcppconfig_1_1json_1_1JsonValue.html#a594e1894cfce52be9ecfac55df914512',1,'cppconfig::json::JsonValue']]],
-  ['isopen_8',['isOpen',['../classcppconfig_1_1util_1_1MMapFile.html#a85571934db38ef3cb9da93ab534225df',1,'cppconfig::util::MMapFile']]],
-  ['isstring_9',['isString',['../classcppconfig_1_1json_1_1JsonValue.html#af12399c2bd818223808832675ae762d4',1,'cppconfig::json::JsonValue']]]
+  ['get_0',['get',['../classcppconfig_1_1Config.html#a323962ec6488509c14028ff5f992150c',1,'cppconfig::Config::get()'],['../classcppconfig_1_1json_1_1JsonValue.html#a01132503706fe26b371177c700e7fe72',1,'cppconfig::json::JsonValue::get()'],['../classcppconfig_1_1json_1_1JsonValue.html#a2f5f100bc9a5a2e22b00ea53ba79b8bb',1,'cppconfig::json::JsonValue::get() const']]],
+  ['getenvname_1',['getEnvName',['../structcppconfig_1_1Config_1_1System.html#a5bfbb310c92a74313cfd8f4e6c0366ed',1,'cppconfig::Config::System']]],
+  ['gethostname_2',['getHostName',['../structcppconfig_1_1Config_1_1System.html#af4313e1b05abaf84a2e0ff7c4001069c',1,'cppconfig::Config::System']]],
+  ['getmodulefilename_3',['getModuleFileName',['../classcppconfig_1_1util_1_1PathUtil.html#a14165a54651080bdf7230a111dec512e',1,'cppconfig::util::PathUtil']]],
+  ['getprogramdirpath_4',['getProgramDirPath',['../classcppconfig_1_1util_1_1PathUtil.html#adb02669452afb8135ceaa04831c33f3b',1,'cppconfig::util::PathUtil']]]
 ];

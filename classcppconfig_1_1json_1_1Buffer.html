@@ -33,7 +33,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">CppConfig<span id="projectnumber">&#160;1.0.7faf5a4</span>
+   <div id="projectname">CppConfig<span id="projectnumber">&#160;1.0.eae43c0</span>
    </div>
   </td>
  </tr>
@@ -102,46 +102,464 @@ $(document).ready(function(){initNavTree('classcppconfig_1_1json_1_1Buffer.html'
   <div class="headertitle"><div class="title">cppconfig::json::Buffer Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class to manage a buffer of characters efficiently.  
+ <a href="classcppconfig_1_1json_1_1Buffer.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="json__buffer_8h_source.html">json_buffer.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3fb4ef1d51c76852d4bb6b57d63938be" id="r_a3fb4ef1d51c76852d4bb6b57d63938be"><td class="memItemLeft" align="right" valign="top"><a id="a3fb4ef1d51c76852d4bb6b57d63938be" name="a3fb4ef1d51c76852d4bb6b57d63938be"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Buffer</b> (std::unique_ptr&lt; char[]&gt; &amp;&amp;d, size_t len)</td></tr>
+<tr class="memitem:a3fb4ef1d51c76852d4bb6b57d63938be" id="r_a3fb4ef1d51c76852d4bb6b57d63938be"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#a3fb4ef1d51c76852d4bb6b57d63938be">Buffer</a> (std::unique_ptr&lt; char[]&gt; &amp;&amp;d, size_t len)</td></tr>
+<tr class="memdesc:a3fb4ef1d51c76852d4bb6b57d63938be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a buffer from a unique pointer to a character array and its length.  <br /></td></tr>
 <tr class="separator:a3fb4ef1d51c76852d4bb6b57d63938be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56d3fc9ea83f291545a2fa546d075daa" id="r_a56d3fc9ea83f291545a2fa546d075daa"><td class="memItemLeft" align="right" valign="top"><a id="a56d3fc9ea83f291545a2fa546d075daa" name="a56d3fc9ea83f291545a2fa546d075daa"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Buffer</b> (const char *d, size_t len)</td></tr>
+<tr class="memitem:a56d3fc9ea83f291545a2fa546d075daa" id="r_a56d3fc9ea83f291545a2fa546d075daa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#a56d3fc9ea83f291545a2fa546d075daa">Buffer</a> (const char *d, size_t len)</td></tr>
+<tr class="memdesc:a56d3fc9ea83f291545a2fa546d075daa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a buffer from a raw pointer to a character array and its length.  <br /></td></tr>
 <tr class="separator:a56d3fc9ea83f291545a2fa546d075daa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f3aaf5afb35b006f4dc5c99916682da" id="r_a2f3aaf5afb35b006f4dc5c99916682da"><td class="memItemLeft" align="right" valign="top"><a id="a2f3aaf5afb35b006f4dc5c99916682da" name="a2f3aaf5afb35b006f4dc5c99916682da"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>next</b> ()</td></tr>
+<tr class="memitem:a2f3aaf5afb35b006f4dc5c99916682da" id="r_a2f3aaf5afb35b006f4dc5c99916682da"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#a2f3aaf5afb35b006f4dc5c99916682da">next</a> ()</td></tr>
+<tr class="memdesc:a2f3aaf5afb35b006f4dc5c99916682da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the next character in the buffer and updates the current position.  <br /></td></tr>
 <tr class="separator:a2f3aaf5afb35b006f4dc5c99916682da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9a8a7cbf3a290b419b553c5409d58ad" id="r_ab9a8a7cbf3a290b419b553c5409d58ad"><td class="memItemLeft" align="right" valign="top"><a id="ab9a8a7cbf3a290b419b553c5409d58ad" name="ab9a8a7cbf3a290b419b553c5409d58ad"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>endOfData</b> () const</td></tr>
+<tr class="memitem:ab9a8a7cbf3a290b419b553c5409d58ad" id="r_ab9a8a7cbf3a290b419b553c5409d58ad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#ab9a8a7cbf3a290b419b553c5409d58ad">endOfData</a> () const</td></tr>
+<tr class="memdesc:ab9a8a7cbf3a290b419b553c5409d58ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the end of the data has been reached.  <br /></td></tr>
 <tr class="separator:ab9a8a7cbf3a290b419b553c5409d58ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f63bff09e660cdf668deaa421971d71" id="r_a8f63bff09e660cdf668deaa421971d71"><td class="memItemLeft" align="right" valign="top"><a id="a8f63bff09e660cdf668deaa421971d71" name="a8f63bff09e660cdf668deaa421971d71"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>match</b> (const char *mem, size_t count) const</td></tr>
+<tr class="memitem:a8f63bff09e660cdf668deaa421971d71" id="r_a8f63bff09e660cdf668deaa421971d71"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#a8f63bff09e660cdf668deaa421971d71">match</a> (const char *mem, size_t <a class="el" href="classcppconfig_1_1json_1_1Buffer.html#ae68952ab0c163e26c89b2868db6864ec">count</a>) const</td></tr>
+<tr class="memdesc:a8f63bff09e660cdf668deaa421971d71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the next sequence of characters matches the given memory block.  <br /></td></tr>
 <tr class="separator:a8f63bff09e660cdf668deaa421971d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4c4d5316643fcc9fa764fb15f7136e2" id="r_ab4c4d5316643fcc9fa764fb15f7136e2"><td class="memItemLeft" align="right" valign="top"><a id="ab4c4d5316643fcc9fa764fb15f7136e2" name="ab4c4d5316643fcc9fa764fb15f7136e2"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>take</b> (size_t len) const</td></tr>
+<tr class="memitem:ab4c4d5316643fcc9fa764fb15f7136e2" id="r_ab4c4d5316643fcc9fa764fb15f7136e2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#ab4c4d5316643fcc9fa764fb15f7136e2">take</a> (size_t len) const</td></tr>
+<tr class="memdesc:ab4c4d5316643fcc9fa764fb15f7136e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts a substring from the current position with the given length.  <br /></td></tr>
 <tr class="separator:ab4c4d5316643fcc9fa764fb15f7136e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae68952ab0c163e26c89b2868db6864ec" id="r_ae68952ab0c163e26c89b2868db6864ec"><td class="memItemLeft" align="right" valign="top"><a id="ae68952ab0c163e26c89b2868db6864ec" name="ae68952ab0c163e26c89b2868db6864ec"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>count</b> (const std::function&lt; bool(char)&gt; &amp;cb) const</td></tr>
+<tr class="memitem:ae68952ab0c163e26c89b2868db6864ec" id="r_ae68952ab0c163e26c89b2868db6864ec"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#ae68952ab0c163e26c89b2868db6864ec">count</a> (const std::function&lt; bool(char)&gt; &amp;cb) const</td></tr>
+<tr class="memdesc:ae68952ab0c163e26c89b2868db6864ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts the number of characters satisfying a given condition from the current position.  <br /></td></tr>
 <tr class="separator:ae68952ab0c163e26c89b2868db6864ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae613390ad1490189f29c3cde371f7589" id="r_ae613390ad1490189f29c3cde371f7589"><td class="memItemLeft" align="right" valign="top"><a id="ae613390ad1490189f29c3cde371f7589" name="ae613390ad1490189f29c3cde371f7589"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>forward</b> (size_t len)</td></tr>
+<tr class="memitem:ae613390ad1490189f29c3cde371f7589" id="r_ae613390ad1490189f29c3cde371f7589"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#ae613390ad1490189f29c3cde371f7589">forward</a> (size_t len)</td></tr>
+<tr class="memdesc:ae613390ad1490189f29c3cde371f7589"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances the current position by a given length.  <br /></td></tr>
 <tr class="separator:ae613390ad1490189f29c3cde371f7589"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0142856fe6b044edf04c917aaa739e9d" id="r_a0142856fe6b044edf04c917aaa739e9d"><td class="memItemLeft" align="right" valign="top"><a id="a0142856fe6b044edf04c917aaa739e9d" name="a0142856fe6b044edf04c917aaa739e9d"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>line</b> () const</td></tr>
+<tr class="memitem:a0142856fe6b044edf04c917aaa739e9d" id="r_a0142856fe6b044edf04c917aaa739e9d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#a0142856fe6b044edf04c917aaa739e9d">line</a> () const</td></tr>
+<tr class="memdesc:a0142856fe6b044edf04c917aaa739e9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the current line number.  <br /></td></tr>
 <tr class="separator:a0142856fe6b044edf04c917aaa739e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d29e57fc4bea8870aa6e8fa947690f9" id="r_a5d29e57fc4bea8870aa6e8fa947690f9"><td class="memItemLeft" align="right" valign="top"><a id="a5d29e57fc4bea8870aa6e8fa947690f9" name="a5d29e57fc4bea8870aa6e8fa947690f9"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>column</b> () const</td></tr>
+<tr class="memitem:a5d29e57fc4bea8870aa6e8fa947690f9" id="r_a5d29e57fc4bea8870aa6e8fa947690f9"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#a5d29e57fc4bea8870aa6e8fa947690f9">column</a> () const</td></tr>
+<tr class="memdesc:a5d29e57fc4bea8870aa6e8fa947690f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the current column number.  <br /></td></tr>
 <tr class="separator:a5d29e57fc4bea8870aa6e8fa947690f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abefb0a475c5e1c48ca1e7b3a97eb6a52" id="r_abefb0a475c5e1c48ca1e7b3a97eb6a52"><td class="memItemLeft" align="right" valign="top"><a id="abefb0a475c5e1c48ca1e7b3a97eb6a52" name="abefb0a475c5e1c48ca1e7b3a97eb6a52"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>current</b> () const</td></tr>
+<tr class="memitem:abefb0a475c5e1c48ca1e7b3a97eb6a52" id="r_abefb0a475c5e1c48ca1e7b3a97eb6a52"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#abefb0a475c5e1c48ca1e7b3a97eb6a52">current</a> () const</td></tr>
+<tr class="memdesc:abefb0a475c5e1c48ca1e7b3a97eb6a52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the current character.  <br /></td></tr>
 <tr class="separator:abefb0a475c5e1c48ca1e7b3a97eb6a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af998376044e8ece67137db9f2fd7805f" id="r_af998376044e8ece67137db9f2fd7805f"><td class="memItemLeft" align="right" valign="top"><a id="af998376044e8ece67137db9f2fd7805f" name="af998376044e8ece67137db9f2fd7805f"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const</td></tr>
+<tr class="memitem:af998376044e8ece67137db9f2fd7805f" id="r_af998376044e8ece67137db9f2fd7805f"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcppconfig_1_1json_1_1Buffer.html#af998376044e8ece67137db9f2fd7805f">end</a> () const</td></tr>
+<tr class="memdesc:af998376044e8ece67137db9f2fd7805f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the end of the character data.  <br /></td></tr>
 <tr class="separator:af998376044e8ece67137db9f2fd7805f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class to manage a buffer of characters efficiently. </p>
+<p>The <a class="el" href="classcppconfig_1_1json_1_1Buffer.html" title="A class to manage a buffer of characters efficiently.">Buffer</a> class provides mechanisms to navigate and manipulate a sequence of characters. It supports operations such as reading the next character, checking if the end of the data has been reached, matching a sequence of characters, extracting a substring, counting characters based on a condition, moving forward in the buffer, and retrieving the current position in terms of line and column. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a3fb4ef1d51c76852d4bb6b57d63938be" name="a3fb4ef1d51c76852d4bb6b57d63938be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fb4ef1d51c76852d4bb6b57d63938be">&#9670;&#160;</a></span>Buffer() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">cppconfig::json::Buffer::Buffer </td>
+          <td>(</td>
+          <td class="paramtype">std::unique_ptr&lt; char[]&gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a buffer from a unique pointer to a character array and its length. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>Unique pointer to the character data. </td></tr>
+    <tr><td class="paramname">len</td><td>Length of the character data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a56d3fc9ea83f291545a2fa546d075daa" name="a56d3fc9ea83f291545a2fa546d075daa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56d3fc9ea83f291545a2fa546d075daa">&#9670;&#160;</a></span>Buffer() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">cppconfig::json::Buffer::Buffer </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a buffer from a raw pointer to a character array and its length. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>Pointer to the character data. </td></tr>
+    <tr><td class="paramname">len</td><td>Length of the character data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5d29e57fc4bea8870aa6e8fa947690f9" name="a5d29e57fc4bea8870aa6e8fa947690f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d29e57fc4bea8870aa6e8fa947690f9">&#9670;&#160;</a></span>column()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t cppconfig::json::Buffer::column </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the current column number. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current column number. </dd></dl>
+
+</div>
+</div>
+<a id="ae68952ab0c163e26c89b2868db6864ec" name="ae68952ab0c163e26c89b2868db6864ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae68952ab0c163e26c89b2868db6864ec">&#9670;&#160;</a></span>count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t cppconfig::json::Buffer::count </td>
+          <td>(</td>
+          <td class="paramtype">const std::function&lt; bool(char)&gt; &amp;&#160;</td>
+          <td class="paramname"><em>cb</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Counts the number of characters satisfying a given condition from the current position. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cb</td><td>A callback function that takes a character as input and returns a boolean. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of characters meeting the condition. </dd></dl>
+
+</div>
+</div>
+<a id="abefb0a475c5e1c48ca1e7b3a97eb6a52" name="abefb0a475c5e1c48ca1e7b3a97eb6a52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abefb0a475c5e1c48ca1e7b3a97eb6a52">&#9670;&#160;</a></span>current()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * cppconfig::json::Buffer::current </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a pointer to the current character. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the current character. </dd></dl>
+
+</div>
+</div>
+<a id="af998376044e8ece67137db9f2fd7805f" name="af998376044e8ece67137db9f2fd7805f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af998376044e8ece67137db9f2fd7805f">&#9670;&#160;</a></span>end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * cppconfig::json::Buffer::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a pointer to the end of the character data. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the end of the data. </dd></dl>
+
+</div>
+</div>
+<a id="ab9a8a7cbf3a290b419b553c5409d58ad" name="ab9a8a7cbf3a290b419b553c5409d58ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9a8a7cbf3a290b419b553c5409d58ad">&#9670;&#160;</a></span>endOfData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cppconfig::json::Buffer::endOfData </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the end of the data has been reached. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the end of data is reached, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="ae613390ad1490189f29c3cde371f7589" name="ae613390ad1490189f29c3cde371f7589"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae613390ad1490189f29c3cde371f7589">&#9670;&#160;</a></span>forward()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cppconfig::json::Buffer::forward </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Advances the current position by a given length. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">len</td><td>Number of characters to move forward. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0142856fe6b044edf04c917aaa739e9d" name="a0142856fe6b044edf04c917aaa739e9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0142856fe6b044edf04c917aaa739e9d">&#9670;&#160;</a></span>line()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t cppconfig::json::Buffer::line </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the current line number. </p>
+<dl class="section return"><dt>Returns</dt><dd>The current line number. </dd></dl>
+
+</div>
+</div>
+<a id="a8f63bff09e660cdf668deaa421971d71" name="a8f63bff09e660cdf668deaa421971d71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f63bff09e660cdf668deaa421971d71">&#9670;&#160;</a></span>match()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool cppconfig::json::Buffer::match </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>mem</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the next sequence of characters matches the given memory block. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mem</td><td>Pointer to the memory block to match. </td></tr>
+    <tr><td class="paramname">count</td><td>Number of characters to match. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the sequence matches, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a2f3aaf5afb35b006f4dc5c99916682da" name="a2f3aaf5afb35b006f4dc5c99916682da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f3aaf5afb35b006f4dc5c99916682da">&#9670;&#160;</a></span>next()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char cppconfig::json::Buffer::next </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the next character in the buffer and updates the current position. </p>
+<dl class="section return"><dt>Returns</dt><dd>The next character. </dd></dl>
+
+</div>
+</div>
+<a id="ab4c4d5316643fcc9fa764fb15f7136e2" name="ab4c4d5316643fcc9fa764fb15f7136e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4c4d5316643fcc9fa764fb15f7136e2">&#9670;&#160;</a></span>take()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string cppconfig::json::Buffer::take </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Extracts a substring from the current position with the given length. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">len</td><td>Length of the substring to extract. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The extracted substring. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
