@@ -35,15 +35,15 @@ class JsonTokenizer {
 
     /// @brief Retrieves the current line.
     /// @return The current line number.
-    size_t line() const { return _buffer.line(); }
+    inline size_t line() const { return _buffer.line(); }
 
     /// @brief Retrieves the current column.
     /// @return The current column number.
-    size_t column() const { return _buffer.column(); }
+    inline size_t column() const { return _buffer.column(); }
 
     /// @brief Retrieves the last error.
     /// @return  The last error.
-    Error error() const { return _error; }
+    inline Error error() const { return _error; }
 
   private:
     Buffer _buffer;  ///< The Buffer containing the JSON data to tokenize.

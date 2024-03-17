@@ -169,7 +169,7 @@ TEST (JsonParser, test_error) {
   constexpr const char *json0 { R"(
     {
       "v1": 2
-      "v2": "hello
+      "v2": "hello"
     }
   )"};
 
@@ -179,5 +179,92 @@ TEST (JsonParser, test_error) {
   ASSERT_FALSE (root0.has_value());
   ASSERT_EQ (parser.error().code, cppconfig::json::JsonParser::ErrorCode::kExpectCommaOrEndObj);
   ASSERT_EQ (parser.error().line, 3);
+  ASSERT_EQ (parser.error().column, 10);
+}
+
+// ----------------------------------------------------------------------------
+// test_error1
+// ----------------------------------------------------------------------------
+TEST (JsonParser, test_error1) {
+  constexpr const char *json { R"(
+    {
+      "v1": "hello
+    }
+  )"};
+
+  cppconfig::json::JsonParser parser;
+
+  const auto root { parser.parse (json) };
+  ASSERT_FALSE (root.has_value());
+  ASSERT_EQ (parser.error().code, cppconfig::json::JsonParser::ErrorCode::kExpectAny);
+  ASSERT_EQ (parser.error().line, 4);
+  ASSERT_EQ (parser.error().column, 2);
+}
+
+// ----------------------------------------------------------------------------
+// test_error2
+// ----------------------------------------------------------------------------
+TEST (JsonParser, test_error2) {
+  constexpr const char *json { R"(
+  )"};
+
+  cppconfig::json::JsonParser parser;
+
+  const auto root { parser.parse (json) };
+  ASSERT_FALSE (root.has_value());
+  ASSERT_EQ (parser.error().code, cppconfig::json::JsonParser::ErrorCode::kExpectAny);
+  ASSERT_EQ (parser.error().line, 1);
+  ASSERT_EQ (parser.error().column, 2);
+}
+
+
+// ----------------------------------------------------------------------------
+// test_error3
+// ----------------------------------------------------------------------------
+TEST (JsonParser, test_error3) {
+  constexpr const char *json { R"({
+    "a": [
+  })"};
+
+  cppconfig::json::JsonParser parser;
+
+  const auto root { parser.parse (json) };
+  ASSERT_FALSE (root.has_value());
+  ASSERT_EQ (parser.error().code, cppconfig::json::JsonParser::ErrorCode::kExpectAny);
+  ASSERT_EQ (parser.error().line, 2);
+  ASSERT_EQ (parser.error().column, 3);
+}
+
+// ----------------------------------------------------------------------------
+// test_error4
+// ----------------------------------------------------------------------------
+TEST (JsonParser, test_error4) {
+  constexpr const char *json { R"({
+    "a": [ [], "v2": 3
+  })"};
+
+  cppconfig::json::JsonParser parser;
+
+  const auto root { parser.parse (json) };
+  ASSERT_FALSE (root.has_value());
+  ASSERT_EQ (parser.error().code, cppconfig::json::JsonParser::ErrorCode::kExpectCommaOrEndArray);
+  ASSERT_EQ (parser.error().line, 1);
+  ASSERT_EQ (parser.error().column, 20);
+}
+
+// ----------------------------------------------------------------------------
+// test_error5
+// ----------------------------------------------------------------------------
+TEST (JsonParser, test_error5) {
+  constexpr const char *json { R"({
+    "a": 1ab
+  })"};
+
+  cppconfig::json::JsonParser parser;
+
+  const auto root { parser.parse (json) };
+  ASSERT_FALSE (root.has_value());
+  ASSERT_EQ (parser.error().code, cppconfig::json::JsonParser::ErrorCode::kExpectAny);
+  ASSERT_EQ (parser.error().line, 1);
   ASSERT_EQ (parser.error().column, 10);
 }
